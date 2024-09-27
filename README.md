@@ -18,7 +18,6 @@ En este proyecto buscamos: a partir de un texto en Castellano y un nivel de Apre
    - Mistral, Cohere.
 
 3. Conseguir un Clasificador de Texto para los niveles MCER en Castellano.
-   - No pudimos conseguir un Clasificador de Texto en Castellano. La alternativa fue traducir los textos Adaptados al inglés y utilizar un Clasificador en Inglés.
 
 4. Para cada Modelo de Lenguaje, comparar precisión y velocidad de Adaptación de textos.
 
