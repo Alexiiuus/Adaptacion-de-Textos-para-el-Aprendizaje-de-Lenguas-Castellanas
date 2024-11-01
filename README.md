@@ -95,10 +95,15 @@ Antes de iniciar las pruebas con modelos de lenguaje, es fundamental contar con 
 Los mejores resultados se obtuvieron entrenando con BERT, siguiendo la [Guía de entrenamiento](https://youtu.be/8yrD0hR8OY8?si=YWhzLPNBcfRtAq2Y) y utilizando **AutoModelForSequenceClassification** con los siguientes parámetros:
 
 - 75% de los datos destinados para entrenamiento y 25% para pruebas.
-- 12 épocas.![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.004.png)
-- Batch size = 32. ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.005.png)
+- 12 épocas.
+- Batch size = 32. 
 
 A continuación, se presentan las precisiones del clasificador, tanto para los datos de entrenamiento como para los de prueba:
+
+| ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.004.png) | ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.005.png) |
+|:------------------------------------------:|:-------------------------------------------:|
+| predicciones con dataset de entrenamiento           | predicciones con dataset de entrenamiento         |
+
 
 **Datos de entrenamiento Datos de testeo**
 
@@ -112,7 +117,7 @@ Esta problemática se evidencia aún más en la matriz de confusión.
 
 A pesar de esto, podemos observar que los resultados son bastante cercanos y que las predicciones erróneas se concentran principalmente en los niveles adyacentes. Este pequeño desfase es algo que incluso pueden experimentar los profesionales. Por lo tanto, la precisión del 66% se refiere únicamente a las predicciones exactas.
 
-Para una mejor comprensión, utilizaremos una métrica de interés: Precisión Aproximada. Al clasificar un texto, se tomará una corrección de desfase, definida como: ó = | \_ − \_ |
+Para una mejor comprensión, utilizaremos una métrica de interés: Precisión Aproximada. Al clasificar un texto, se tomará una corrección de desfase, definida como: correcion = | nivel_esperado − nivel_predecido |
 
 - Si la corrección es 0, consideraremos que la predicción es correcta (y la contaremos como 1).
 - Si la corrección es 1, consideraremos que la predicción es más o menos correcta (y la contaremos como 0.5).
@@ -124,9 +129,9 @@ Con estos datos, podemos proceder a analizar el **ruido generado por la traducci
 
 A continuación, se presentan las precisiones del clasificador, tanto para los datos de entrenamiento como para los de prueba:
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.008.png) ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.009.png)
-
-**Datos de entrenamiento Datos de testeo**
+| ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.008.png) | ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.009.png) |
+|:------------------------------------------:|:-------------------------------------------:|
+| predicciones con dataset de entrenamiento           | predicciones con dataset de entrenamiento         |
 
 Como se puede observar, el clasificador en inglés enfrenta dificultades similares a las del clasificador en español. Es importante examinar la matriz de confusión.
 
