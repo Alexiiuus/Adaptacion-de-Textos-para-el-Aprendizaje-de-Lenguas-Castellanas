@@ -68,18 +68,12 @@ En este proyecto buscamos: a partir de un texto en Castellano y un nivel de Apre
 
 Para iniciar, necesitamos un conjunto de datos que contenga textos etiquetados según los niveles de aprendizaje del MCER, lo cual es esencial para el entrenamiento y la evaluación del modelo. Sin embargo, nos enfrentamos a un desafío significativo: la falta de datasets en español debidamente etiquetados. Por esto decidimos traducir un conjunto de datos etiquetado en inglés, específicamente [CEFR Levelled English Texts (kaggle.com)](https://www.kaggle.com/datasets/amontgomerie/cefr-levelled-english-texts) disponible en Kaggle.
 
-<div align="center">
-  <figure style="display: inline-block; margin: 0 10px;">
-    <img src="images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.001.png" alt="Original" width="285">
-    <figcaption>Original</figcaption>
-  </figure>
-  <figure style="display: inline-block; margin: 0 10px;">
-    <img src="images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.002.png" alt="Traducido" width="300">
-    <figcaption>Traducido</figcaption>
-  </figure>
-</div>
+| ![Original](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.001.png) | ![Traducido](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.002.png) |
+|:------------------------------------------:|:-------------------------------------------:|
+| Original                                   | Traducido                                   |
 
 La traducción de un conjunto de datos presenta una desventaja significativa: algunos textos pueden quedar mal etiquetados durante el proceso de traducción. Esto puede introducir ruido en el entrenamiento y, dado que no contamos con un clasificador de texto en español que pueda corregir estos errores, el uso de este dataset podría ser contraproducente.
+
 
 
 Más adelante mostraremos el ruido generado por la traducción.
