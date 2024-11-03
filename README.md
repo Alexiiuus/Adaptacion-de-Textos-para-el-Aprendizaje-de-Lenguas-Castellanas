@@ -100,10 +100,33 @@ Los mejores resultados se obtuvieron entrenando con BERT, siguiendo la [Guía de
 
 A continuación, se presentan las precisiones del clasificador, tanto para los datos de entrenamiento como para los de prueba:
 
-| ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.004.png) | ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.005.png) |
-|:------------------------------------------:|:-------------------------------------------:|
-| predicciones con dataset de entrenamiento           | predicciones con dataset de entrenamiento         |
+### Predicciones con dataset de entrenamiento
 
+| Clase | Precisión | Recall | F1-Score | Soporte |
+|-------|-----------|--------|----------|---------|
+| 0     | 0.97      | 0.99   | 0.98     | 147      |
+| 1     | 0.98      | 0.97   | 0.97     | 151      |
+| 2     | 1.00      | 0.99   | 1.00     | 156      |
+| 3     | 0.99      | 1.00   | 0.99     | 151      |
+| 4     | 1.00      | 0.98   | 0.99     | 151      |
+| 5     | 1.00      | 1.00   | 1.00     | 144      |
+| **Precisión global** | |        | **0.99**  | **900** |
+| **Promedio macro**  | 0.99      | 0.99   | 0.65     | 900      |
+| **Promedio ponderado** | 0.99 | 0.99 | 0.65       | 900      |
+
+### Predicciones con dataset de evaluación
+
+| Clase | Precisión | Recall | F1-Score | Soporte |
+|-------|-----------|--------|----------|---------|
+| 0     | 0.86      | 0.72   | 0.78     | 53      |
+| 1     | 0.65      | 0.71   | 0.68     | 49      |
+| 2     | 0.53      | 0.48   | 0.50     | 44      |
+| 3     | 0.54      | 0.65   | 0.59     | 49      |
+| 4     | 0.48      | 0.69   | 0.57     | 49      |
+| 5     | 0.88      | 0.50   | 0.64     | 56      |
+| **Precisión global** | |        | **0.63**  | **300** |
+| **Promedio macro**  | 0.66      | 0.63   | 0.63     | 300      |
+| **Promedio ponderado** | 0.67 | 0.63 | 0.63       | 300      |
 
 **Datos de entrenamiento Datos de testeo**
 
@@ -129,9 +152,33 @@ Con estos datos, podemos proceder a analizar el **ruido generado por la traducci
 
 A continuación, se presentan las precisiones del clasificador, tanto para los datos de entrenamiento como para los de prueba:
 
-| ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.008.png) | ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.009.png) |
-|:------------------------------------------:|:-------------------------------------------:|
-| predicciones con dataset de entrenamiento           | predicciones con dataset de entrenamiento         |
+### Predicciones con dataset de entrenamiento
+
+| Clase | Precisión | Recall | F1-Score | Soporte |
+|-------|-----------|--------|----------|---------|
+| 0     | 1.00      | 1.00   | 1.00     | 140      |
+| 1     | 1.00      | 1.00   | 1.00     | 152      |
+| 2     | 1.00      | 1.00   | 1.00     | 141      |
+| 3     | 1.00      | 1.00   | 1.00     | 146      |
+| 4     | 1.00      | 1.00   | 1.00     | 163      |
+| 5     | 1.00      | 1.00   | 1.00     | 158      |
+| **Precisión global** | |        | **1.00**  | **900** |
+| **Promedio macro**  | 1.00      | 1.00   | 1.00     | 900      |
+| **Promedio ponderado** | 1.00 | 1.00 | 1.00       | 900      |
+
+### Predicciones con dataset de evaluación
+
+| Clase | Precisión | Recall | F1-Score | Soporte |
+|-------|-----------|--------|----------|---------|
+| 0     | 0.86      | 0.80   | 0.83     | 60      |
+| 1     | 0.67      | 0.77   | 0.72     | 48      |
+| 2     | 0.61      | 0.46   | 0.52     | 59      |
+| 3     | 0.51      | 0.54   | 0.52     | 54      |
+| 4     | 0.46      | 0.68   | 0.55     | 37      |
+| 5     | 0.82      | 0.67   | 0.74     | 42      |
+| **Precisión global** | |        | **0.65**  | **300** |
+| **Promedio macro**  | 0.66      | 0.65   | 0.65     | 300      |
+| **Promedio ponderado** | 0.66 | 0.65 | 0.65       | 300      |
 
 Como se puede observar, el clasificador en inglés enfrenta dificultades similares a las del clasificador en español. Es importante examinar la matriz de confusión.
 
@@ -148,7 +195,19 @@ En este punto, procederemos a probar dos modelos que han demostrado ser fáciles
 
 Tomaremos una muestra de 120 textos y transformaremos cada uno a un nivel aleatorio. Para ambos modelos, utilizaremos el siguiente prompt:
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.011.png)
+```python
+prompt = lambda label, text:  f"""
+
+A continuación, te proporcionaré un texto en español y te pediré que lo modifiques para diferentes niveles de competencia lingüística
+(A1, A2, B1, B2, C1 y C2), concretamente: {label}. El objetivo es que adaptes el texto según el nivel de dificultad, modificando el
+vocabulario y las estructuras gramaticales para que se ajusten a cada nivel, pero manteniendo el mismo mensaje central. Solo responde
+con la version del texto modificada para dicho nivel. No incluyas ninguna introducción, título, explicación o comentario. Solamente dame
+el texto adaptado.
+
+Aquí está el texto:
+{text}
+"""
+```
 
 Donde **label** representa el nivel deseado para generar el texto, y **text** es el texto que servirá como base para la generación. Con esto, podemos proceder a realizar las pruebas y comparaciones.
 
@@ -156,7 +215,10 @@ Con el prompt definido, empezaremos probando Mistral.
 
 La primera impresión obtenida es el tiempo de ejecución, el cual fue de **47 minutos**. En dicha ejecución obtuvimos los siguientes resultados:
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.012.png)
+```
+Procentaje de precisión (Exacto): 0.20833333333333334
+Procentaje de precisión (Aproximado): 0.37916666666666665
+```
 
 Como se puede observar, las predicciones (considerando la corrección mencionada al final de la sección anterior) son bastante deficientes, con un rendimiento por debajo de 0.5. Esta situación se ilustrará de manera más clara en la matriz de confusión.
 
