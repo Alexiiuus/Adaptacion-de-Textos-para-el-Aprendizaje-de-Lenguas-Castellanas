@@ -361,4 +361,4 @@ Logramos entrenar satisfactoriamente un Clasificador de textos a distintos nivel
 
 **Aspectos que pueden mejorar:**
 
--Elaboración de un Dataset original en Castellano con niveles etiquetados sin recurrir a traducción. -Elección de un mejor Modelo de Lenguaje base que sea gratuito o alternativamente pagar para no tener limitaciones en consultas de Api ni entrenamiento de Fine-Tuning.
+- Elaboración de un Dataset original en Castellano con niveles etiquetados sin recurrir a traducción. -Elección de un mejor Modelo de Lenguaje base que sea gratuito o alternativamente pagar para no tener limitaciones en consultas de Api ni entrenamiento de Fine-Tuning.
