@@ -226,7 +226,10 @@ Como se puede observar, las predicciones (considerando la corrección mencionada
 
 Ahora probemos con Cohere. Este modelo impresionantemente logró ejecutar lo mismo que Mistral pero en **16 min**, obteniendo los siguiente resultados:
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.014.png)
+```
+Procentaje de precisión (Exacto): 0.39166666666666666
+Procentaje de precisión (Aproximado): 0.55
+```
 
 Es evidente que estos resultados superan a los obtenidos por Mistral. Esto se puede apreciar con mayor claridad al observar la matriz de confusión de Cohere.
 
@@ -244,37 +247,103 @@ Observaciones: Vemos que Cohere tiene dificultades para adaptar textos a niveles
 
 **Todos (Sin filtro):**
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.016.png) ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.017.png)
+```
+Porcentaje de precisión (Exacto):  0.31
+Porcentaje de precisión (Aproximado):  0.522083333333333333
+Cantidad de Textos:  1200
+```
+
+| Label | Precisión |
+|-------|-----------|
+| A1    | 208       |
+| A2    | 293       |
+| B1    | 193       |
+| B2    | 208       |
+| C1    | 199       |
+| C2    | 99        |
 
 **Solo exactos (Adaptaciones Exactas)**
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.018.png) ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.019.png)
+```
+Porcentaje de precisión (Exacto):  1.0
+Porcentaje de precisión (Aproximado):  1.0
+Cantidad de Textos:  372
+```
+
+| Label | Precisión |
+|-------|-----------|
+| A1    | 116       |
+| A2    | 85        |
+| B1    | 41        |
+| B2    | 50        |
+| C1    | 45        |
+| C2    | 35        |
 
 **Exactos y Adyacentes**
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.020.png) ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.021.png)
+```
+Porcentaje de precisión (Exacto):  0.42224744608399545
+Porcentaje de precisión (Aproximado):  0.7111237230419978
+Cantidad de Textos:  881
+```
+
+| Label | Precisión |
+|-------|-----------|
+| A1    | 166       |
+| A2    | 214       |
+| B1    | 116       |
+| B2    | 144       |
+| C1    | 172       |
+| C2    | 69        |
 
 **Exactos + mitad de textos Adyacentes**
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.022.png) ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.023.png)
+```
+Porcentaje de precisión (Exacto):  0.5933014354066986
+Porcentaje de precisión (Aproximado):  0.79665071177033493
+Cantidad de Textos:  627
+```
+
+| Label | Precisión |
+|-------|-----------|
+| A1    | 142       |
+| A2    | 149       |
+| B1    | 80        |
+| B2    | 94        |
+| C1    | 109       |
+| C2    | 53        |
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.024.jpeg)
 
-Al hacer Fine-Tuning con las 4 muestras obtuvimos los siguientes resultados: Exacto (372 textos):
+Al hacer Fine-Tuning con las 4 muestras obtuvimos los siguientes resultados: 
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.025.png)
+### Exacto (372 textos)
 
-Exacto\_adyacentes (627 textos):
+```
+Porcentaje de precisión (Exacto):  0.18333333333333332
+Porcentaje de precisión (Aproximado):  0.27083333333333335
+```
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.026.png)
+### Exacto\_adyacentes (627 textos):
 
-Exacto\_mitadadyacentes (881 textos):
+```
+Porcentaje de precisión (Exacto):  0.18333333333333332
+Porcentaje de precisión (Aproximado): 0.358333333333333334
+```
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.027.png)
+### Exacto\_mitadadyacentes (881 textos):
 
-completo\_sinfiltro (1200 textos)
+```
+Porcentaje de precisión (Exacto):  0.19166666666666668
+Porcentaje de precisión (Aproximado):  0.39166666666666666
+```
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.028.png)
+### Completo\_sinfiltro (1200 textos)
+
+```
+Porcentaje de precisión (Exacto):  0.175
+Porcentaje de precisión (Aproximado):  0.36666666666666664
+```
 
 De todos los anteriores, el más prometedor es entrenar únicamente con aquellas adaptaciones de texto que el Clasificador considera exactas (Dataset Exactos). A pesar de ser la muestra más pequeña, tuvo resultados similares al resto (Exacto\_mitadadyacentes fue ligeramente superior pero tenía casi el triple de textos).
 
