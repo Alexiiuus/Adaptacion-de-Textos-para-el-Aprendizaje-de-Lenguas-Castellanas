@@ -114,7 +114,7 @@ A continuación, se presentan las precisiones del clasificador, tanto para los d
 | **Promedio macro**  | 0.99      | 0.99   | 0.65     | 900      |
 | **Promedio ponderado** | 0.99 | 0.99 | 0.65       | 900      |
 
-### Predicciones con dataset de evaluación
+### Predicciones con dataset de testeo
 
 | Clase | Precisión | Recall | F1-Score | Soporte |
 |-------|-----------|--------|----------|---------|
@@ -127,8 +127,6 @@ A continuación, se presentan las precisiones del clasificador, tanto para los d
 | **Precisión global** | |        | **0.63**  | **300** |
 | **Promedio macro**  | 0.66      | 0.63   | 0.63     | 300      |
 | **Promedio ponderado** | 0.67 | 0.63 | 0.63       | 300      |
-
-**Datos de entrenamiento Datos de testeo**
 
 Si graficamos las precisiones en función de las diferentes clases, podremos identificar más claramente cuáles son las clases problemáticas. El clasificador tuvo mayores dificultades para distinguir los casos intermedios, en particular los de la clase C1.
 
