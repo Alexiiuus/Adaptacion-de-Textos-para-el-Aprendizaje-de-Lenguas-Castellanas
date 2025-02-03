@@ -1,197 +1,156 @@
-﻿**Título:**
+﻿# Adaptación de Textos para el Aprendizaje de Lenguas Castellanas 📚
 
-Adaptación de Textos para el Aprendizaje de Lenguas Castellanas.
+## Resumen ✍️
 
-**Resumen:**
+En este proyecto, buscamos adaptar un texto en castellano a diferentes niveles de aprendizaje del MCER (A1, A2, B1, B2, C1, C2) utilizando un modelo de lenguaje, de manera que se transcriba al nivel deseado sin perder su significado original.
 
-En este proyecto buscamos: a partir de un texto en Castellano y un nivel de Aprendizaje del MCER (A1, A2, B1, B2, C1, C2), aplicar un modelo de lenguajes para transcribir el texto al nivel deseado sin perder su significado original.
+## Hipótesis de Trabajo 🤔
 
-**Hipótesis de trabajo:**
+- Todo texto puede clasificarse en un nivel de aprendizaje MCER (A1, A2, B1, B2, C1, C2).
+- Es posible reescribir un texto en distintos niveles sin alterar su significado original.
 
-- Todo texto es categorizable en algún nivel de aprendizaje MCER (A1, A2, B1, B2, C1, C2).
-- Es posible reescribir cualquier texto en distintos niveles sin modificar su significado original.
+## Objetivos Preliminares 🎯
 
-**Objetivos preliminares:**
+1. Obtener un dataset con textos en castellano etiquetados por nivel (A1, A2, B1, B2, C1, C2).
+   - Aunque intentamos conseguir un dataset en castellano, no tuvimos éxito. Como alternativa, utilizamos un dataset en inglés ya etiquetado y lo traducimos al castellano.
+   - **Nota**: La traducción podría introducir ruido en los datos. Se estimará el impacto del ruido generado.
+   
+2. Buscar modelos de lenguaje adecuados para la tarea de adaptación de textos en castellano.
+   - Se evaluaron dos opciones: **Mistral** y **Cohere**.
 
-1. Conseguir un Dataset con textos en Castellano etiquetados por nivel (A1, A2, B1, B2, C1, C2).
-    - Intentamos conseguir un Dataset de estas características, pero no tuvimos éxito. La alternativa que encontramos fue utilizar un Dataset en Inglés (ya etiquetado) y traducirlo al Castellano.
-    - Nota: La traducción podría generar ruido a la muestra. Se hará una estimación del ruido generado por la traducción.
-2. Buscar Modelos de Lenguaje que puedan trabajar en la tarea de Adaptación de textos en Castellano.
-   1. Optamos por dos opciones: Mistral y Cohere.
-2. Obtener o entrenar un Clasificador de Texto para los niveles MCER en Castellano.
-    - Realizamos un “balanceo de clases” en el dataset traducido al   castellano. Este subdataset está conformado por 1200 textos (200 textos de cada clase).
-    - Se realizaron entrenamientos con BERT y linearSVC.
-        - Los mejores resultados fueron obtenidos con BERT (accuracy: 66%) mientras que con LinearSVC (accuracy: 55%).
-    - Notamos que las predicciones erróneas se acumulaban casi por completo en los niveles adyacentes (cuando se equivocaba era en un nivel próximo, no eran errores graves).
-    - Para una mejor comprensión, utilizamos una métrica de interés: la Precisión Aproximada o Precisión Intuitiva. Donde las predicciones erróneas adyacentes valen como medio acierto (0.5)
-4. Para cada Modelo de Lenguaje, comparar precisión y velocidad de Adaptación de textos.
-    - Para compararlos, se usó una muestra del subdataset con clases balanceadas. Esta muestra estaba conformada por 120 textos (20 textos de cada clase).
-    - Para realizar la comparación utilizamos el clasificador anteriormente entrenado.
-    - Al ejecutar ambos modelos, Cohere mostró un notable desempeño por encima de Mistral.
-        - Cohere: Demoró 15 mins, Precisión Exacta del 39% y Precisión Aproximada del 55%.
-        - Mistral: Demoró 45 min, Precisión Exacta del 21% y Precisión Aproximada del 38%.
-5. Fine-Tuning del Modelo de Lenguaje con mejor rendimiento.
-    - Decidimos realizar Fine-Tuning con el modelo de mejor rendimiento (Cohere).
-        - Afortunadamente, Cohere provee de una API donde podemos realizar fine-tuning proveyendo un dataset de entrenamiento (tipo chat). Esto nos ahorra la capacidad de cómputo.
-        - Desafortunadamente, esta es la única forma de realizar fine-tuning con Cohere y sus capacidades son limitadas (a menos que pagues la subscripción). Sin embargo, esperamos que los resultados sean suficientemente satisfactorios.
+3. Obtener o entrenar un clasificador de texto para los niveles MCER en castellano.
+   - Realizamos un balanceo de clases en el dataset traducido, el cual consta de 1200 textos (200 textos por clase).
+   - Se entrenaron modelos utilizando BERT y LinearSVC.
+     - **Resultados**: BERT alcanzó una precisión de **66%**, mientras que LinearSVC obtuvo **55%**.
+     - Las predicciones incorrectas se concentraron principalmente en niveles adyacentes (los errores fueron menores).
+     - Se utilizó la **precisión aproximada** (o precisión intuitiva), donde los errores en niveles adyacentes se consideran como medio acierto (0.5).
 
-**Referencias:**
+4. Comparar la precisión y velocidad de adaptación de textos de cada modelo de lenguaje.
+   - Se utilizó una muestra del subdataset balanceado con 120 textos (20 textos por clase).
+   - Para la comparación, se usó el clasificador entrenado previamente.
+   - **Resultados**:
+     - **Cohere**: 15 minutos, Precisión Exacta del **39%**, Precisión Aproximada del **55%**.
+     - **Mistral**: 45 minutos, Precisión Exacta del **21%**, Precisión Aproximada del **38%**.
 
-- Modelos de Lenguajes:
-    - [Mistral AI | Frontier AI in your hands](https://mistral.ai/)
-    - [Cohere | The leading AI platform for enterprise](https://cohere.com/)
-- Dataset en Inglés: [CEFR Levelled English Texts (kaggle.com)](https://www.kaggle.com/datasets/amontgomerie/cefr-levelled-english-texts)
-- Traductor EN-ES: [Helsinki-NLP/opus-mt-en-es · Hugging Face](https://huggingface.co/Helsinki-NLP/opus-mt-en-es)
-- Traducción (Código): [notebook9834025409 | Kaggle](https://www.kaggle.com/code/alexistomascenteno/notebook9834025409/edit/run/197471934)
+5. Fine-tuning del modelo de lenguaje con mejor rendimiento.
+   - Decidimos realizar fine-tuning con **Cohere** (el modelo de mejor rendimiento).
+     - **Ventaja**: Cohere ofrece una API que permite realizar fine-tuning con un dataset tipo chat, lo que ahorra capacidad de cómputo.
+     - **Limitación**: Esta es la única forma de realizar fine-tuning y sus capacidades son limitadas a menos que se adquiera una suscripción. A pesar de esto, esperamos obtener resultados satisfactorios.
 
-**Planificación:**
+## Referencias 📚
 
-- Semana 1: Septiembre 23 a 29.
-  - Conseguir Dataset con textos en castellano etiquetados por nivel MCER (Objetivo 1).
-- Semana 2: Septiembre 30 a Octubre 6
-  - Traducción del Dataset con textos en inglés etiquetados por nivel al castellano (Objetivo 1).
-  - Buscar Modelos de Lenguaje que puedan trabajar en la tarea de Adaptación de textos en Castellano (Objetivo 2).
-- Semana 3: Septiembre 7 a 13.
-  - Obtener o entrenar un Clasificador de Texto para los niveles MCER en Castellano (Objetivo 3).
-- Semana 4: Septiembre 14 a 20.
-  - Para cada Modelo de Lenguaje, comparar precisión y velocidad de Adaptación de textos. Decidir el mejor (Objetivo 4).
-- Semana 5: Septiembre 21 a 27.
-  - Fine-Tuning del Modelo de Lenguaje con mejor rendimiento (Objetivo 5).
-- Semana 6: Septiembre 28 a Noviembre 3.
-- Estimación del ruido generado por traducción (Incorporación de Feedbacks).
-- Exploración del Fine-Tuning con fin de mejorar desempeño (Objetivo 5).
-- Elaboración de informe: últimas pruebas y ajustes.
+- **Modelos de Lenguaje**:
+  - [Mistral AI | Frontier AI in your hands](https://mistral.ai/)
+  - [Cohere | The leading AI platform for enterprise](https://cohere.com/)
+  
+- **Dataset en Inglés**: [CEFR Levelled English Texts (Kaggle)](https://www.kaggle.com/datasets/amontgomerie/cefr-levelled-english-texts)
 
-**Desarrollo del Proyecto:**
+- **Traductor EN-ES**: [Helsinki-NLP/opus-mt-en-es · Hugging Face](https://huggingface.co/Helsinki-NLP/opus-mt-en-es)
 
-1. **Dataset:**
+- **Traducción (Código)**: [notebook9834025409 | Kaggle](https://www.kaggle.com/code/alexistomascenteno/notebook9834025409/edit/run/197471934)
 
-Para iniciar, necesitamos un conjunto de datos que contenga textos etiquetados según los niveles de aprendizaje del MCER, lo cual es esencial para el entrenamiento y la evaluación del modelo. Sin embargo, nos enfrentamos a un desafío significativo: la falta de datasets en español debidamente etiquetados. Por esto decidimos traducir un conjunto de datos etiquetado en inglés, específicamente [CEFR Levelled English Texts (kaggle.com)](https://www.kaggle.com/datasets/amontgomerie/cefr-levelled-english-texts) disponible en Kaggle.
+## Planificación 📅
+
+- **Semana 1** (Septiembre 23 a 29):
+  - Conseguir un dataset con textos en castellano etiquetados por nivel MCER (Objetivo 1).
+  
+- **Semana 2** (Septiembre 30 a Octubre 6):
+  - Traducir el dataset en inglés al castellano (Objetivo 1).
+  - Buscar modelos de lenguaje adecuados para la tarea de adaptación de textos en castellano (Objetivo 2).
+  
+- **Semana 3** (Octubre 7 a 13):
+  - Entrenar un clasificador de texto para los niveles MCER en castellano (Objetivo 3).
+  
+- **Semana 4** (Octubre 14 a 20):
+  - Comparar precisión y velocidad de adaptación de textos de cada modelo de lenguaje (Objetivo 4).
+  
+- **Semana 5** (Octubre 21 a 27):
+  - Realizar fine-tuning del modelo de lenguaje con mejor rendimiento (Objetivo 5).
+  
+- **Semana 6** (Septiembre 28 a Noviembre 3):
+  - Estimación del ruido generado por la traducción (Incorporación de feedbacks).
+  - Exploración de fine-tuning para mejorar el desempeño (Objetivo 5).
+  - Elaboración de informe: últimas pruebas y ajustes.
+
+## Desarrollo del Proyecto 🔧
+
+### 1. Dataset 📂
+
+El primer paso fue obtener un conjunto de datos con textos etiquetados según los niveles del MCER. No encontramos un dataset adecuado en español, por lo que optamos por traducir el dataset **[CEFR Levelled English Texts (Kaggle)](https://www.kaggle.com/datasets/amontgomerie/cefr-levelled-english-texts)** del inglés al español.
 
 | ![Original](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.001.png) | ![Traducido](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.002.png) |
-|:------------------------------------------:|:-------------------------------------------:|
-| Original                                   | Traducido                                   |
+|:--------------------------------:|:--------------------------------:|
+| Texto original en inglés         | Texto traducido al español      |
 
-La traducción de un conjunto de datos presenta una desventaja significativa: algunos textos pueden quedar mal etiquetados durante el proceso de traducción. Esto puede introducir ruido en el entrenamiento y, dado que no contamos con un clasificador de texto en español que pueda corregir estos errores, el uso de este dataset podría ser contraproducente.
+La traducción puede introducir errores en las etiquetas, generando **ruido** en los datos. A pesar de ello, utilizamos este dataset con la expectativa de que sea suficiente para entrenar el modelo.
+
+Para minimizar sesgos, realizamos un **balanceo de clases**, tomando como referencia la clase minoritaria (C2 = 200).
+
+![Distribución de clases balanceada](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.003.png)
+
+Este balanceo ayuda a evitar que el modelo favorezca las clases mayoritarias e ignore patrones importantes en las minoritarias.
 
 
+### 2. Clasificador 🔍
 
-Más adelante mostraremos el ruido generado por la traducción.
+Antes de iniciar las pruebas con modelos de lenguaje, es fundamental contar con un **clasificador de texto** que nos permita realizar comparaciones de precisión. Como mencionamos anteriormente, no encontramos un clasificador específico para textos en español que utilice niveles del MCER. Por lo tanto, decidimos entrenar un clasificador utilizando un conjunto de datos ya etiquetado. 
 
-Antes de trabajar con el dataset traducido, realizamos un "balanceo de clases", tomando como referencia la clase minoritaria (C2 = 200).
+#### Enfoques de entrenamiento 🔬
+Exploramos diferentes enfoques de entrenamiento para el clasificador:
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.003.png)
+- **BERT** 🤖
+- **FeedForward** 🧠
+- **LinearSVC** ⚙️
 
-Esto se hace para evitar que el modelo desarrolle sesgos hacia clases mayoritarias, lo que podría llevar a que ignore patrones importantes de las clases minoritarias.
-
-2. **Clasificador:**
-
-Antes de iniciar las pruebas con modelos de lenguaje, es fundamental contar con un clasificador de texto que nos permita realizar comparaciones de precisión. Como mencionamos anteriormente, no encontramos un clasificador específico para textos en español que utilice niveles del MCER. Por lo tanto, decidimos entrenar un clasificador utilizando un conjunto de datos ya etiquetado. Para ello, exploramos diferentes enfoques de entrenamiento:
-
-- BERT
-- FeedForward
-- LinearSVC
-
-Los mejores resultados se obtuvieron entrenando con BERT, siguiendo la [Guía de entrenamiento](https://youtu.be/8yrD0hR8OY8?si=YWhzLPNBcfRtAq2Y) y utilizando **AutoModelForSequenceClassification** con los siguientes parámetros:
+Los mejores resultados se obtuvieron entrenando con **BERT**, siguiendo la [Guía de entrenamiento](https://youtu.be/8yrD0hR8OY8?si=YWhzLPNBcfRtAq2Y) y utilizando **AutoModelForSequenceClassification** con los siguientes parámetros:
 
 - 75% de los datos destinados para entrenamiento y 25% para pruebas.
-- 12 épocas.
-- Batch size = 32. 
+- 12 épocas ⏳.
+- **Batch size** = 32.
 
-A continuación, se presentan las precisiones del clasificador, tanto para los datos de entrenamiento como para los de prueba:
+### Precisión del Clasificador 📊
 
-### Predicciones con dataset de entrenamiento
+![](images/metrics_comparison_test.png)
 
-| Clase | Precisión | Recall | F1-Score | Soporte |
-|-------|-----------|--------|----------|---------|
-| 0     | 0.97      | 0.99   | 0.98     | 147      |
-| 1     | 0.98      | 0.97   | 0.97     | 151      |
-| 2     | 1.00      | 0.99   | 1.00     | 156      |
-| 3     | 0.99      | 1.00   | 0.99     | 151      |
-| 4     | 1.00      | 0.98   | 0.99     | 151      |
-| 5     | 1.00      | 1.00   | 1.00     | 144      |
-| **Precisión global** | |        | **0.99**  | **900** |
-| **Promedio macro**  | 0.99      | 0.99   | 0.65     | 900      |
-| **Promedio ponderado** | 0.99 | 0.99 | 0.65       | 900      |
-
-### Predicciones con dataset de testeo
-
-| Clase | Precisión | Recall | F1-Score | Soporte |
-|-------|-----------|--------|----------|---------|
-| 0     | 0.86      | 0.72   | 0.78     | 53      |
-| 1     | 0.65      | 0.71   | 0.68     | 49      |
-| 2     | 0.53      | 0.48   | 0.50     | 44      |
-| 3     | 0.54      | 0.65   | 0.59     | 49      |
-| 4     | 0.48      | 0.69   | 0.57     | 49      |
-| 5     | 0.88      | 0.50   | 0.64     | 56      |
-| **Precisión global** | |        | **0.63**  | **300** |
-| **Promedio macro**  | 0.66      | 0.63   | 0.63     | 300      |
-| **Promedio ponderado** | 0.67 | 0.63 | 0.63       | 300      |
-
-Si graficamos las precisiones en función de las diferentes clases, podremos identificar más claramente cuáles son las clases problemáticas. El clasificador tuvo mayores dificultades para distinguir los casos intermedios, en particular los de la clase C1.
+Si graficamos las precisiones en función de las diferentes clases, podremos identificar más claramente cuáles son las clases problemáticas. El clasificador tuvo mayores dificultades para distinguir los casos intermedios, en particular los de la clase **C1**.
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.006.png)
 
-Esta problemática se evidencia aún más en la matriz de confusión.
+Esta problemática se evidencia aún más en la **matriz de confusión**.
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.007.png)
 
-A pesar de esto, podemos observar que los resultados son bastante cercanos y que las predicciones erróneas se concentran principalmente en los niveles adyacentes. Este pequeño desfase es algo que incluso pueden experimentar los profesionales. Por lo tanto, la precisión del 66% se refiere únicamente a las predicciones exactas.
+A pesar de esto, las predicciones erróneas se concentran principalmente en los niveles adyacentes, un pequeño desfase que incluso pueden experimentar los profesionales. Por lo tanto, la **precisión del 66%** se refiere únicamente a las **predicciones exactas**.
 
-Para una mejor comprensión, utilizaremos una métrica de interés: Precisión Aproximada. Al clasificar un texto, se tomará una corrección de desfase, definida como: correcion = | nivel_esperado − nivel_predecido |
+### Precisión Aproximada 📈
 
-- Si la corrección es 0, consideraremos que la predicción es correcta (y la contaremos como 1).
-- Si la corrección es 1, consideraremos que la predicción es más o menos correcta (y la contaremos como 0.5).
-- En cualquier otro caso, la predicción se considerará incorrecta (y la contaremos como 0).
+Para una mejor comprensión, utilizamos una métrica alternativa: **Precisión Aproximada**, con la siguiente corrección de desfase:
 
-Si bien la **precisión exacta** es del **66%**, al analizar nuestra métrica de interés, podemos afirmar que el clasificador tiene una **Precisión Intuitiva** o **Precisión Aproximada** del **96%.**
+- **Corrección = | nivel_esperado − nivel_predecido |**
+- Si la corrección es **0**, la predicción es **correcta** (1 punto). ✅
+- Si la corrección es **1**, la predicción es **aproximadamente correcta** (0.5 puntos). 🤔
+- En cualquier otro caso, la predicción es **incorrecta** (0 puntos). ❌
 
-Con estos datos, podemos proceder a analizar el **ruido generado por la traducción**. Para ello, desarrollaremos un clasificador en inglés que utilice los mismos parámetros de entrenamiento que el clasificador en español, empleando el conjunto de datos original, pero equilibrado de la misma manera que el conjunto traducido.
+Bajo esta métrica, la **precisión exacta** es del **66%**, pero la **Precisión Aproximada** es del **96%**. 🎯
 
-A continuación, se presentan las precisiones del clasificador, tanto para los datos de entrenamiento como para los de prueba:
+### Comparación con Clasificador en Inglés 🌍
 
-### Predicciones con dataset de entrenamiento
+Para analizar el **ruido de la traducción**, desarrollamos un clasificador en inglés con los mismos parámetros de entrenamiento y datos equilibrados. 
 
-| Clase | Precisión | Recall | F1-Score | Soporte |
-|-------|-----------|--------|----------|---------|
-| 0     | 1.00      | 1.00   | 1.00     | 140      |
-| 1     | 1.00      | 1.00   | 1.00     | 152      |
-| 2     | 1.00      | 1.00   | 1.00     | 141      |
-| 3     | 1.00      | 1.00   | 1.00     | 146      |
-| 4     | 1.00      | 1.00   | 1.00     | 163      |
-| 5     | 1.00      | 1.00   | 1.00     | 158      |
-| **Precisión global** | |        | **1.00**  | **900** |
-| **Promedio macro**  | 1.00      | 1.00   | 1.00     | 900      |
-| **Promedio ponderado** | 1.00 | 1.00 | 1.00       | 900      |
+![](images/metrics_comparison.png)
 
-### Predicciones con dataset de evaluación
+La similitud entre las **matrices de confusión** de ambos clasificadores demuestra que la **traducción genera un ruido casi imperceptible**. 🤖
 
-| Clase | Precisión | Recall | F1-Score | Soporte |
-|-------|-----------|--------|----------|---------|
-| 0     | 0.86      | 0.80   | 0.83     | 60      |
-| 1     | 0.67      | 0.77   | 0.72     | 48      |
-| 2     | 0.61      | 0.46   | 0.52     | 59      |
-| 3     | 0.51      | 0.54   | 0.52     | 54      |
-| 4     | 0.46      | 0.68   | 0.55     | 37      |
-| 5     | 0.82      | 0.67   | 0.74     | 42      |
-| **Precisión global** | |        | **0.65**  | **300** |
-| **Promedio macro**  | 0.66      | 0.65   | 0.65     | 300      |
-| **Promedio ponderado** | 0.66 | 0.65 | 0.65       | 300      |
 
-Como se puede observar, el clasificador en inglés enfrenta dificultades similares a las del clasificador en español. Es importante examinar la matriz de confusión.
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.010.jpeg)
+### 3. Modelos de lenguaje 🌐
 
-La similitud entre la matriz de confusión del clasificador en inglés y la del español es evidente. Por lo tanto, podemos inferir que la traducción genera un ruido casi imperceptible.
+En esta sección, probaremos dos modelos que se han destacado por su facilidad de uso y efectividad a la hora de generar respuestas mediante un prompt:
 
-3. **Modelos de lenguaje:**
+- **Mistral** 🤖
+- **Cohere** 🌐
 
-En este punto, procederemos a probar dos modelos que han demostrado ser fáciles de usar y efectivos para generar respuestas mediante un prompt:
-
-- Mistral
-- Cohere
-
-Tomaremos una muestra de 120 textos y transformaremos cada uno a un nivel aleatorio. Para ambos modelos, utilizaremos el siguiente prompt:
+Tomamos una muestra de 120 textos y asignamos aleatoriamente un nivel de competencia lingüística a cada uno. Para ambos modelos, utilizamos el siguiente prompt:
 
 ```python
 prompt = lambda label, text:  f"""
@@ -199,7 +158,7 @@ prompt = lambda label, text:  f"""
 A continuación, te proporcionaré un texto en español y te pediré que lo modifiques para diferentes niveles de competencia lingüística
 (A1, A2, B1, B2, C1 y C2), concretamente: {label}. El objetivo es que adaptes el texto según el nivel de dificultad, modificando el
 vocabulario y las estructuras gramaticales para que se ajusten a cada nivel, pero manteniendo el mismo mensaje central. Solo responde
-con la version del texto modificada para dicho nivel. No incluyas ninguna introducción, título, explicación o comentario. Solamente dame
+con la versión del texto modificada para dicho nivel. No incluyas ninguna introducción, título, explicación o comentario. Solamente dame
 el texto adaptado.
 
 Aquí está el texto:
@@ -207,37 +166,32 @@ Aquí está el texto:
 """
 ```
 
-Donde **label** representa el nivel deseado para generar el texto, y **text** es el texto que servirá como base para la generación. Con esto, podemos proceder a realizar las pruebas y comparaciones.
+En este caso, **label** representa el nivel lingüístico deseado para la modificación del texto, y **text** es el texto base que se adaptará.
 
-Con el prompt definido, empezaremos probando Mistral.
+### Evaluación de los modelos 📊
+#### Mistral 🤖
 
-La primera impresión obtenida es el tiempo de ejecución, el cual fue de **47 minutos**. En dicha ejecución obtuvimos los siguientes resultados:
+* Tiempo de ejecución: 47 minutos.
+* Precisión exacta: 20.83%.
+* Precisión aproximada: 37.91%.
 
-```
-Procentaje de precisión (Exacto): 0.20833333333333334
-Procentaje de precisión (Aproximado): 0.37916666666666665
-```
-
-Como se puede observar, las predicciones (considerando la corrección mencionada al final de la sección anterior) son bastante deficientes, con un rendimiento por debajo de 0.5. Esta situación se ilustrará de manera más clara en la matriz de confusión.
+Como se puede observar, las predicciones (considerando la corrección mencionada al final de la sección anterior) son bastante deficientes, con un rendimiento por debajo de 0.5. Esta situación se ilustrará claramente en la matriz de confusión.
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.013.png)
 
-Ahora probemos con Cohere. Este modelo impresionantemente logró ejecutar lo mismo que Mistral pero en **16 min**, obteniendo los siguiente resultados:
+#### Cohere 🌐
 
-```
-Procentaje de precisión (Exacto): 0.39166666666666666
-Procentaje de precisión (Aproximado): 0.55
-```
+* Tiempo de ejecución: 16 minutos.
+* Precisión exacta: 39.17%.
+* Precisión aproximada: 55%.
 
-Es evidente que estos resultados superan a los obtenidos por Mistral. Esto se puede apreciar con mayor claridad al observar la matriz de confusión de Cohere.
+Observando la matriz de confusión, queda claro que Cohere supera a Mistral en todos los aspectos de esta tarea, o al menos interpretando de manera mas efectiva el prompt al generar textos de mayor calidad.
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.015.png)
 
-Se puede observar la dificultad para diferenciar los casos intermedios, especialmente en las clases B1 y B2, así como en el caso de C2. Aun así, es evidente que Cohere ha logrado interpretar el prompt de manera más efectiva que Mistral, generando textos de mejor calidad.
+Se puede observar la dificultad para diferenciar los casos intermedios, especialmente en las clases B1 y B2, así como en el caso de C2. Considerando el tiempo de ejecución y los resultados obtenidos, **Cohere** se presenta como la mejor opción.
 
-Considerando el tiempo de ejecución y los resultados obtenidos, **Cohere** se presenta como la mejor opción.
-
-4. **Fine-tuning del modelo:**
+### 4. Fine-tuning del modelo
 
 Tomamos una muestra aleatoria de 1200 textos del Dataset y le pedimos a Cohere adaptarlos a distintos niveles. Usamos la misma proporción para cada nivel (es decir, 200 de cada nivel). Luego a esos **Textos Adaptados** los revisamos con el Clasificador de Texto para que nos diga su nivel real.
 
