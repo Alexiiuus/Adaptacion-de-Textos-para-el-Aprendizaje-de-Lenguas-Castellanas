@@ -114,8 +114,6 @@ Los mejores resultados se obtuvieron entrenando con **BERT**, siguiendo la [Guí
 
 Si graficamos las precisiones en función de las diferentes clases, podremos identificar más claramente cuáles son las clases problemáticas. El clasificador tuvo mayores dificultades para distinguir los casos intermedios, en particular los de la clase **C1**.
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.006.png)
-
 Esta problemática se evidencia aún más en la **matriz de confusión**.
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.007.png)
@@ -191,127 +189,128 @@ Observando la matriz de confusión, queda claro que Cohere supera a Mistral en t
 
 Se puede observar la dificultad para diferenciar los casos intermedios, especialmente en las clases B1 y B2, así como en el caso de C2. Considerando el tiempo de ejecución y los resultados obtenidos, **Cohere** se presenta como la mejor opción.
 
-### 4. Fine-tuning del modelo
+### 📌 Fine-Tuning del Modelo
 
-Tomamos una muestra aleatoria de 1200 textos del Dataset y le pedimos a Cohere adaptarlos a distintos niveles. Usamos la misma proporción para cada nivel (es decir, 200 de cada nivel). Luego a esos **Textos Adaptados** los revisamos con el Clasificador de Texto para que nos diga su nivel real.
+#### 🔍 Proceso
 
-Observaciones: Vemos que Cohere tiene dificultades para adaptar textos a niveles más altos.
+Seleccionamos aleatoriamente 1200 textos del dataset y utilizamos Cohere para adaptarlos a distintos niveles del MCER. Cada nivel tuvo la misma proporción (200 textos). Luego, los **Textos Adaptados** fueron evaluados por nuestro Clasificador de Texto para determinar su nivel real.
 
-**Todos (Sin filtro):**
+🔎 **Observación:** Cohere muestra dificultades para adaptar textos a niveles más altos.
 
-```
-Porcentaje de precisión (Exacto):  0.31
-Porcentaje de precisión (Aproximado):  0.522083333333333333
-Cantidad de Textos:  1200
-```
+#### 📊 Resultados
 
-| Label | Precisión |
-|-------|-----------|
-| A1    | 208       |
-| A2    | 293       |
-| B1    | 193       |
-| B2    | 208       |
-| C1    | 199       |
-| C2    | 99        |
-
-**Solo exactos (Adaptaciones Exactas)**
+##### 📌 Todos (Sin filtro):
 
 ```
-Porcentaje de precisión (Exacto):  1.0
-Porcentaje de precisión (Aproximado):  1.0
-Cantidad de Textos:  372
+🔹 Precisión Exacta:  31%
+🔹 Precisión Aproximada:  52.2%
+🔹 Cantidad de Textos:  1200
 ```
 
-| Label | Precisión |
-|-------|-----------|
-| A1    | 116       |
-| A2    | 85        |
-| B1    | 41        |
-| B2    | 50        |
-| C1    | 45        |
-| C2    | 35        |
+| Nivel | Cantidad |
+|-------|----------|
+| A1    | 208      |
+| A2    | 293      |
+| B1    | 193      |
+| B2    | 208      |
+| C1    | 199      |
+| C2    | 99       |
 
-**Exactos y Adyacentes**
-
-```
-Porcentaje de precisión (Exacto):  0.42224744608399545
-Porcentaje de precisión (Aproximado):  0.7111237230419978
-Cantidad de Textos:  881
-```
-
-| Label | Precisión |
-|-------|-----------|
-| A1    | 166       |
-| A2    | 214       |
-| B1    | 116       |
-| B2    | 144       |
-| C1    | 172       |
-| C2    | 69        |
-
-**Exactos + mitad de textos Adyacentes**
+##### ✅ Solo Exactos (Adaptaciones Exactas)
 
 ```
-Porcentaje de precisión (Exacto):  0.5933014354066986
-Porcentaje de precisión (Aproximado):  0.79665071177033493
-Cantidad de Textos:  627
+🔹 Precisión Exacta:  100%
+🔹 Precisión Aproximada:  100%
+🔹 Cantidad de Textos:  372
 ```
 
-| Label | Precisión |
-|-------|-----------|
-| A1    | 142       |
-| A2    | 149       |
-| B1    | 80        |
-| B2    | 94        |
-| C1    | 109       |
-| C2    | 53        |
+| Nivel | Cantidad |
+|-------|----------|
+| A1    | 116      |
+| A2    | 85       |
+| B1    | 41       |
+| B2    | 50       |
+| C1    | 45       |
+| C2    | 35       |
+
+##### 🎯 Exactos y Adyacentes
+
+```
+🔹 Precisión Exacta:  42.2%
+🔹 Precisión Aproximada:  71.1%
+🔹 Cantidad de Textos:  881
+```
+
+| Nivel | Cantidad |
+|-------|----------|
+| A1    | 166      |
+| A2    | 214      |
+| B1    | 116      |
+| B2    | 144      |
+| C1    | 172      |
+| C2    | 69       |
+
+##### 🔥 Exactos + Mitad de Textos Adyacentes
+
+```
+🔹 Precisión Exacta:  59.3%
+🔹 Precisión Aproximada:  79.7%
+🔹 Cantidad de Textos:  627
+```
+
+| Nivel | Cantidad |
+|-------|----------|
+| A1    | 142      |
+| A2    | 149      |
+| B1    | 80       |
+| B2    | 94       |
+| C1    | 109      |
+| C2    | 53       |
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.024.jpeg)
 
-Al hacer Fine-Tuning con las 4 muestras obtuvimos los siguientes resultados: 
+#### 🔬 Resultados del Fine-Tuning
 
-### Exacto (372 textos)
+Después de realizar Fine-Tuning con las distintas muestras, estos fueron los resultados:
 
+##### 🎯 Exacto (372 textos)
 ```
-Porcentaje de precisión (Exacto):  0.18333333333333332
-Porcentaje de precisión (Aproximado):  0.27083333333333335
-```
-
-### Exacto\_adyacentes (627 textos):
-
-```
-Porcentaje de precisión (Exacto):  0.18333333333333332
-Porcentaje de precisión (Aproximado): 0.358333333333333334
+🔹 Precisión Exacta:  18.3%
+🔹 Precisión Aproximada:  27.1%
 ```
 
-### Exacto\_mitadadyacentes (881 textos):
-
+##### 🎯 Exacto + Adyacentes (627 textos)
 ```
-Porcentaje de precisión (Exacto):  0.19166666666666668
-Porcentaje de precisión (Aproximado):  0.39166666666666666
-```
-
-### Completo\_sinfiltro (1200 textos)
-
-```
-Porcentaje de precisión (Exacto):  0.175
-Porcentaje de precisión (Aproximado):  0.36666666666666664
+🔹 Precisión Exacta:  18.3%
+🔹 Precisión Aproximada:  35.8%
 ```
 
-De todos los anteriores, el más prometedor es entrenar únicamente con aquellas adaptaciones de texto que el Clasificador considera exactas (Dataset Exactos). A pesar de ser la muestra más pequeña, tuvo resultados similares al resto (Exacto\_mitadadyacentes fue ligeramente superior pero tenía casi el triple de textos).
+##### 🎯 Exacto + Mitad de Adyacentes (881 textos)
+```
+🔹 Precisión Exacta:  19.2%
+🔹 Precisión Aproximada:  39.2%
+```
 
-El problema consiste en el tamaño de la muestra: es necesario hacer una enorme cantidad de llamadas para luego filtrarlas y quedarnos con aquellas que el Clasificador considera exactas.
+##### 🎯 Completo (Sin Filtro - 1200 textos)
+```
+🔹 Precisión Exacta:  17.5%
+🔹 Precisión Aproximada:  36.7%
+```
 
-El tamaño del dataset de entrenamiento se vio limitado ya que Cohere limita la cantidad de llamadas a la Api (1000 llamadas por mes). Además Cohere limita los parámetros que se pueden utilizar para realizar fine-tuning en su manera gratuita.
+## 🚀 Conclusiones
 
-Desafortunadamente, los resultados después del fine-tuning son incluso peores que los originales. Si tuviéramos más llamadas a la Api podríamos generar más textos y filtrar los exactos, para que sea una muestra mayor y por lo tanto un mejor resultado de entrenamiento.
+📌 **El enfoque más prometedor** es entrenar con las adaptaciones exactas del clasificador (Dataset Exactos). A pesar de ser la muestra más pequeña, sus resultados fueron similares a conjuntos más grandes (Exacto + Mitad de Adyacentes tuvo un leve mejor desempeño, pero con casi el triple de datos).
 
-**Conclusiones:**
+⚠️ **Limitaciones:**
+- Cohere restringe las llamadas a la API (máximo 1000 por mes), lo que dificulta generar y filtrar más textos.
+- La versión gratuita de Cohere impone restricciones en los parámetros de Fine-Tuning.
 
-No pudimos entrenar satisfactoriamente un adaptador de textos en castellano a los distintos niveles de aprendizaje del MCER.
+📉 **Desafortunadamente**, los resultados tras el Fine-Tuning fueron peores que los originales. Con más llamadas a la API, podríamos generar más textos exactos y mejorar el entrenamiento.
 
-Logramos entrenar satisfactoriamente un Clasificador de textos a distintos niveles de aprendizaje del MCER. Si hubiera más tiempo y más recursos se podrían seguir introduciendo prompts y filtrar aquellos que sean mejores según el clasificador y con eso seguir entrenando hasta que se puedan adaptar satisfactoriamente. El verdadero problema fue la limitación que Cohere impone a los usuarios gratuitos, desafortunadamente no tuvimos en cuenta este detalle.
+## 📌 Posibles Mejoras
 
-**Aspectos que pueden mejorar:**
+✔️ Crear un dataset original en castellano con niveles etiquetados, evitando traducciones.
+✔️ Elegir un mejor modelo de lenguaje base que sea gratuito o considerar pagar por acceso sin restricciones de API ni Fine-Tuning.
 
-- Elaboración de un Dataset original en Castellano con niveles etiquetados sin recurrir a traducción. 
-- Elección de un mejor Modelo de Lenguaje base que sea gratuito o alternativamente pagar para no tener limitaciones en consultas de Api ni entrenamiento de Fine-Tuning.
+🚀 Si tuviéramos más tiempo y recursos, podríamos seguir introduciendo prompts, filtrando los mejores según el clasificador y refinando el entrenamiento hasta obtener adaptaciones satisfactorias. El mayor obstáculo fue la limitación impuesta por Cohere en la versión gratuita.
+
