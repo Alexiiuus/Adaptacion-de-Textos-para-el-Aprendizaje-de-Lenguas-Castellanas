@@ -1,7 +1,3 @@
-Aquí tienes una versión mejorada de tu README:  
-
----
-
 # Fine-Tuning del Modelo Cohere  
 
 Este repositorio contiene el proceso de fine-tuning del modelo Cohere utilizando distintos conjuntos de datos preparados. El objetivo es analizar y comparar los resultados del entrenamiento bajo diferentes condiciones.  
