@@ -110,7 +110,7 @@ Los mejores resultados se obtuvieron entrenando con **BERT**, siguiendo la [Guí
 
 ### Precisión del Clasificador 📊
 
-![](images/metrics_comparison_test.png)
+![](images/metrics_histogram_eval.png)
 
 Si graficamos las precisiones en función de las diferentes clases, podremos identificar más claramente cuáles son las clases problemáticas. El clasificador tuvo mayores dificultades para distinguir los casos intermedios, en particular los de la clase **C1**.
 
@@ -135,7 +135,7 @@ Bajo esta métrica, la **precisión exacta** es del **66%**, pero la **Precisió
 
 Para analizar el **ruido de la traducción**, desarrollamos un clasificador en inglés con los mismos parámetros de entrenamiento y datos equilibrados. 
 
-![](images/metrics_comparison.png)
+![](images/metrics_histogram_test.png)
 
 La similitud entre las **matrices de confusión** de ambos clasificadores demuestra que la **traducción genera un ruido casi imperceptible**. 🤖
 
