@@ -330,7 +330,7 @@ Como se observa en la matriz de confusión, **Cohere** supera a **Mistral** en t
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.015.png)
 
-Se evidencia la dificultad para diferenciar los casos intermedios, especialmente en las clases B1 y B2, así como en C2. Considerando el tiempo de ejecución y los resultados obtenidos, **Cohere** se presenta como la mejor opción.
+Se evidencia la dificultad para diferenciar los casos intermedios, especialmente en las clases B1 y B2, así como en C2. Considerando el tiempo de ejecución y los resultados obtenidos, **Cohere** se presenta como la mejor opción para hacer el Fine-Tuning.
 
 
 
