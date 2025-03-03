@@ -503,7 +503,7 @@ finetuned_model = co.finetuning.create_finetuned_model(
 
 Este código configura y entrena un modelo ajustado en Cohere utilizando el dataset generado. Se establecen hiperparámetros clave como la tasa de aprendizaje, el tamaño del lote y la estrategia de detención temprana para optimizar el rendimiento del modelo.  
 
-### 🔬 Resultados del Fine-Tuning  
+#### 🔬 Resultados del Fine-Tuning  
 
 Tras entrenar los modelos con los distintos datasets generados, evaluamos su rendimiento mediante el siguiente procedimiento:  
 
@@ -518,27 +518,27 @@ Es importante recordar que la evaluación en este último paso está sujeta a lo
 - **Errores en el entrenamiento**, que afectan la precisión de las predicciones.  
 
 
-### 📊 Desempeño por Dataset  
+#### 📊 Desempeño por Dataset  
 
-##### 🎯 `Exactos`  
+**🎯 `Exactos`**  
 ```
 🔹 Precisión Exacta: 18.3% (44 de 240 textos acertados) 
 🔹 Precisión Aproximada: 27.1% (65 de 240 textos aproximados)  
 ```
 
-##### 🎯 `Exactos y Adyacentes`  
+**🎯 `Exactos y Adyacentes`**  
 ```
 🔹 Precisión Exacta: 18.3% (44 de 240 textos acertados)  
 🔹 Precisión Aproximada: 35.8% (86 de 240 textos aproximados)  
 ```
 
-##### 🎯 `Exactos + Mitad de Adyacentes`  
+**🎯 `Exactos + Mitad de Adyacentes`**  
 ```
 🔹 Precisión Exacta: 19.2% (46 de 240 textos acertados)  
 🔹 Precisión Aproximada: 39.2% (94 de 240 textos aproximados)   
 ```
 
-##### 🎯 `Sin Filtros`  
+**🎯 `Sin Filtros`**  
 ```
 🔹 Precisión Exacta: 17.5% (42 de 240 textos acertados)  
 🔹 Precisión Aproximada: 36.7% (88 de 240 textos aproximados)   
