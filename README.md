@@ -523,26 +523,26 @@ Es importante recordar que la evaluación en este último paso está sujeta a lo
 
 ##### 🎯 `Exactos`  
 ```
-🔹 Precisión Exacta: 18.3%  
-🔹 Precisión Aproximada: 27.1%  
+🔹 Precisión Exacta: 18.3% (44 de 240 textos acertados) 
+🔹 Precisión Aproximada: 27.1% (65 de 240 textos aproximados)  
 ```
 
 ##### 🎯 `Exactos y Adyacentes`  
 ```
-🔹 Precisión Exacta: 18.3%  
-🔹 Precisión Aproximada: 35.8%  
+🔹 Precisión Exacta: 18.3% (44 de 240 textos acertados)  
+🔹 Precisión Aproximada: 35.8% (86 de 240 textos aproximados)  
 ```
 
 ##### 🎯 `Exactos + Mitad de Adyacentes`  
 ```
-🔹 Precisión Exacta: 19.2%  
-🔹 Precisión Aproximada: 39.2%  
+🔹 Precisión Exacta: 19.2% (46 de 240 textos acertados)  
+🔹 Precisión Aproximada: 39.2% (94 de 240 textos aproximados)   
 ```
 
 ##### 🎯 `Sin Filtros`  
 ```
-🔹 Precisión Exacta: 17.5%  
-🔹 Precisión Aproximada: 36.7%  
+🔹 Precisión Exacta: 17.5% (42 de 240 textos acertados)  
+🔹 Precisión Aproximada: 36.7% (88 de 240 textos aproximados)   
 ```
 
 Estos resultados reflejan el impacto de los distintos filtros aplicados en el dataset. Aunque la eliminación de ruido mejora ligeramente la precisión, los valores obtenidos indican que el modelo aún enfrenta desafíos en la adaptación precisa de los textos a los niveles deseados.  
