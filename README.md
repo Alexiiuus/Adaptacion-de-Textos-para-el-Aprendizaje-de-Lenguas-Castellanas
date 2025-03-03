@@ -532,18 +532,19 @@ Después de realizar Fine-Tuning con las distintos datasets generados, estos fue
 
 ## 🚀 Conclusiones
 
-📌 **El enfoque más prometedor** es entrenar con las adaptaciones exactas del clasificador (Dataset Exactos). A pesar de ser la muestra más pequeña, sus resultados fueron similares a conjuntos más grandes (Exacto + Mitad de Adyacentes tuvo un leve mejor desempeño, pero con casi el triple de datos).
+📌 **El enfoque más prometedor** es entrenar con las adaptaciones exactas del clasificador (Dataset Exactos). A pesar de ser la muestra más pequeña, sus resultados fueron similares a conjuntos más grandes (Exacto + Mitad de Adyacentes tuvo un leve mejor desempeño, pero con casi el triple de datos). Recordemos nuevamente el error introducido por la traducción y por el clasificador que terminan afectando al resultado final.
 
 ⚠️ **Limitaciones:**
 - Cohere restringe las llamadas a la API (máximo 1000 por mes), lo que dificulta generar y filtrar más textos.
 - La versión gratuita de Cohere impone restricciones en los parámetros de Fine-Tuning.
-
-📉 **Desafortunadamente**, los resultados tras el Fine-Tuning fueron peores que los originales. Con más llamadas a la API, podríamos generar más textos exactos y mejorar el entrenamiento.
+- Carencia de un dataset adecuado para la tarea.
+- Clasificador con pobre desempeño.
 
 ## 📌 Posibles Mejoras
 
-✔️ Crear un dataset original en castellano con niveles etiquetados, evitando traducciones.
-✔️ Elegir un mejor modelo de lenguaje base que sea gratuito o considerar pagar por acceso sin restricciones de API ni Fine-Tuning.
+* Crear un dataset original en castellano con niveles etiquetados, evitando traducciones.
+* Elegir un mejor modelo de lenguaje base que sea gratuito o considerar pagar por acceso sin restricciones de API ni Fine-Tuning.
+* Entrenar un Clasificador con una mayor precisión. 
 
 🚀 Si tuviéramos más tiempo y recursos, podríamos seguir introduciendo prompts, filtrando los mejores según el clasificador y refinando el entrenamiento hasta obtener adaptaciones satisfactorias. El mayor obstáculo fue la limitación impuesta por Cohere en la versión gratuita.
 
