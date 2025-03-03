@@ -332,86 +332,118 @@ Como se observa en la matriz de confusión, **Cohere** supera a **Mistral** en t
 
 Se evidencia la dificultad para diferenciar los casos intermedios, especialmente en las clases B1 y B2, así como en C2. Considerando el tiempo de ejecución y los resultados obtenidos, **Cohere** se presenta como la mejor opción para hacer el Fine-Tuning.
 
+### 📌 Fine-Tuning del Modelo Cohere para la Adaptación de Textos  
 
-### 📌 Fine-Tuning del Modelo Cohere para la adaptacion de textos
+#### 🔍 Proceso  
 
-#### 🔍 Proceso
+El primer paso es generar un dataset con ejemplos estructurados de la siguiente manera:  
 
-Seleccionamos aleatoriamente 1200 textos del dataset y utilizamos Cohere para adaptarlos a distintos niveles del MCER. Cada nivel tuvo la misma proporción (200 textos). Luego, los **Textos Adaptados** fueron evaluados por nuestro Clasificador de Texto para determinar su nivel real.
+```json
+[
+  { "role": "User", "content": "Prompt con un texto y el nivel pedido" },
+  { "role": "Chatbot", "content": "Texto generado por Cohere" }
+]
+```  
 
-🔎 **Observación:** Cohere muestra dificultades para adaptar textos a niveles más altos.
+Para esto, seguimos el siguiente flujo:  
 
-#### 📊 Resultados
+1. **Generación del dataset base para fine-tuning:**  
+   - Seleccionamos aleatoriamente 1,200 textos del dataset original.  
+   - Usamos Cohere para adaptarlos a distintos niveles del MCER, asegurando un balance de 200 textos por nivel.  
 
-##### 📌 Todos (Sin filtro):
+2. **Creación de subdatasets con diferentes filtros:**  
+   - **`Sin filtros`**: Incluye el dataset original sin modificaciones (resultado del paso anterior).  
+   - **`Exactos`**: Solo los textos en los que el clasificador asigna el mismo nivel que el solicitado.  
+   - **`Exactos y Adyacentes`**: Textos donde el clasificador asigna el nivel exacto o uno adyacente al solicitado.  
+   - **`Exactos + Mitad de Textos Adyacentes`**: Similar al anterior, pero conserva solo la mitad de los textos adyacentes.  
 
-```
-🔹 Precisión Exacta:  31%
-🔹 Precisión Aproximada:  52.2%
-🔹 Cantidad de Textos:  1200
-```
+Es importante destacar que este proceso arrastra dos fuentes de error:  
+- **Ruido por la traducción:** Posibles alteraciones en los textos al traducir el dataset original.  
+- **Error del clasificador:** Desajustes entre el nivel solicitado y el nivel clasificado en los textos adaptados.  
 
-| Nivel | Cantidad |
-|-------|----------|
-| A1    | 208      |
-| A2    | 293      |
-| B1    | 193      |
-| B2    | 208      |
-| C1    | 199      |
-| C2    | 99       |
+#### 📊 Resultados  
 
-##### ✅ Solo Exactos (Adaptaciones Exactas)
+A continuación, se presentan los resultados obtenidos con los distintos datasets generados.  
 
-```
-🔹 Precisión Exacta:  100%
-🔹 Precisión Aproximada:  100%
-🔹 Cantidad de Textos:  372
-```
-
-| Nivel | Cantidad |
-|-------|----------|
-| A1    | 116      |
-| A2    | 85       |
-| B1    | 41       |
-| B2    | 50       |
-| C1    | 45       |
-| C2    | 35       |
-
-##### 🎯 Exactos y Adyacentes
+##### 📌 Dataset Completo (`Sin filtro`)  
 
 ```
-🔹 Precisión Exacta:  42.2%
-🔹 Precisión Aproximada:  71.1%
-🔹 Cantidad de Textos:  881
+🔹 Precisión Exacta: 31%  
+🔹 Precisión Aproximada: 52.2%  
+🔹 Cantidad de Textos: 1,200  
 ```
 
 | Nivel | Cantidad |
-|-------|----------|
-| A1    | 166      |
-| A2    | 214      |
-| B1    | 116      |
-| B2    | 144      |
-| C1    | 172      |
-| C2    | 69       |
+|-------|---------|
+| A1    | 208     |
+| A2    | 293     |
+| B1    | 193     |
+| B2    | 208     |
+| C1    | 199     |
+| C2    | 99      |
 
-##### 🔥 Exactos + Mitad de Textos Adyacentes
+Se observa una inconsistencia en la distribución de textos por nivel, ya que, aunque se solicitó adaptar exactamente 200 textos por nivel, el clasificador final asignó cantidades diferentes. Esto indica que algunos textos no fueron adaptados correctamente al nivel esperado.  
+
+##### ✅ Dataset `Exactos` (Adaptaciones Coincidentes)  
 
 ```
-🔹 Precisión Exacta:  59.3%
-🔹 Precisión Aproximada:  79.7%
-🔹 Cantidad de Textos:  627
+🔹 Precisión Exacta: 100%  
+🔹 Precisión Aproximada: 100%  
+🔹 Cantidad de Textos: 372  
 ```
 
 | Nivel | Cantidad |
-|-------|----------|
-| A1    | 142      |
-| A2    | 149      |
-| B1    | 80       |
-| B2    | 94       |
-| C1    | 109      |
-| C2    | 53       |
+|-------|---------|
+| A1    | 116     |
+| A2    | 85      |
+| B1    | 41      |
+| B2    | 50      |
+| C1    | 45      |
+| C2    | 35      |
 
-![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.024.jpeg)
+Este resultado refleja un patrón ya observado al comparar Mistral con Cohere: la facilidad del modelo para adaptar textos a niveles bajos y su pérdida de precisión a medida que aumenta la complejidad del nivel solicitado. Como consecuencia, el dataset final está desbalanceado, con una mayor proporción de textos en niveles básicos.  
+
+##### 🎯 Dataset `Exactos y Adyacentes`  
+
+```
+🔹 Precisión Exacta: 42.2%  
+🔹 Precisión Aproximada: 71.1%  
+🔹 Cantidad de Textos: 881  
+```
+
+| Nivel | Cantidad |
+|-------|---------|
+| A1    | 166     |
+| A2    | 214     |
+| B1    | 116     |
+| B2    | 144     |
+| C1    | 172     |
+| C2    | 69      |
+
+Este dataset amplía el de **Exactos**, incorporando ejemplos en los que el clasificador asignó un nivel adyacente al solicitado. Esto permite aumentar la cantidad de datos disponibles sin perder demasiada precisión.  
+
+##### 🔥 Dataset `Exactos + Mitad de Textos Adyacentes`  
+
+```
+🔹 Precisión Exacta: 59.3%  
+🔹 Precisión Aproximada: 79.7%  
+🔹 Cantidad de Textos: 627  
+```
+
+| Nivel | Cantidad |
+|-------|---------|
+| A1    | 142     |
+| A2    | 149     |
+| B1    | 80      |
+| B2    | 94      |
+| C1    | 109     |
+| C2    | 53      |
+
+Este dataset es una versión reducida del anterior, en la que solo se conserva la mitad de los textos adyacentes. La intención es evaluar si eliminar parte de este ruido mejora la precisión del modelo sin afectar significativamente la diversidad del dataset.  
+
+![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.024.jpeg)  
+
+La imagen muestra la base de datos original de Cohere junto con los datasets generados en este proceso.  
 
 #### 🔬 Resultados del Fine-Tuning
 
