@@ -212,6 +212,8 @@ Para evaluar el impacto del **ruido de traducción**, entrenamos un clasificador
 
 La similitud entre las **matrices de confusión** de ambos clasificadores sugiere que el efecto de la traducción es mínimo y no introduce un ruido significativo en el modelo. 🤖
 
+Recordemos que este ruido es intruducido por el modelo de traducción usado.
+
 ### 3. Modelos de lenguaje para generación de texto 🌐
 
 Probamos varios modelos, pero la mayoría resultó ser demasiado pesada, lenta o simplemente no interpretaba bien el prompt. Afortunadamente, encontramos dos modelos que destacaron por su facilidad de uso, rapidez, buena documentación y capacidad para comprender la tarea asignada:
@@ -502,33 +504,48 @@ finetuned_model = co.finetuning.create_finetuned_model(
 
 Este código configura y entrena un modelo ajustado en Cohere utilizando el dataset generado. Se establecen hiperparámetros clave como la tasa de aprendizaje, el tamaño del lote y la estrategia de detención temprana para optimizar el rendimiento del modelo.  
 
-#### 🔬 Resultados del Fine-Tuning
+### 🔬 Resultados del Fine-Tuning  
 
-Después de realizar Fine-Tuning con las distintos datasets generados, estos fueron los resultados:
+Tras entrenar los modelos con los distintos datasets generados, evaluamos su rendimiento mediante el siguiente procedimiento:  
 
-##### 🎯 Exacto (372 textos)
+1. **Selección de textos:** Elegimos aleatoriamente 240 textos (40 por cada nivel del MCER).  
+2. **Asignación de nivel:** Seleccionamos aleatoriamente el nivel al que deseamos adaptar cada texto.  
+3. **Generación de respuestas:** Pasamos el prompt con el texto y el nivel objetivo al modelo fine-tuneado.  
+4. **Evaluación:** Clasificamos los textos generados y comparamos el nivel predicho con el nivel deseado.  
+
+Es importante recordar que la evaluación en este último paso está sujeta a los errores del clasificador, los cuales pueden provenir de:  
+
+- **Ruido en el dataset**, debido al proceso de traducción.  
+- **Errores en el entrenamiento**, que afectan la precisión de las predicciones.  
+
+
+### 📊 Desempeño por Dataset  
+
+##### 🎯 `Exactos`  
 ```
-🔹 Precisión Exacta:  18.3%
-🔹 Precisión Aproximada:  27.1%
+🔹 Precisión Exacta: 18.3%  
+🔹 Precisión Aproximada: 27.1%  
 ```
 
-##### 🎯 Exacto + Adyacentes (627 textos)
+##### 🎯 `Exactos y Adyacentes`  
 ```
-🔹 Precisión Exacta:  18.3%
-🔹 Precisión Aproximada:  35.8%
-```
-
-##### 🎯 Exacto + Mitad de Adyacentes (881 textos)
-```
-🔹 Precisión Exacta:  19.2%
-🔹 Precisión Aproximada:  39.2%
+🔹 Precisión Exacta: 18.3%  
+🔹 Precisión Aproximada: 35.8%  
 ```
 
-##### 🎯 Completo (Sin Filtro - 1200 textos)
+##### 🎯 `Exactos + Mitad de Adyacentes`  
 ```
-🔹 Precisión Exacta:  17.5%
-🔹 Precisión Aproximada:  36.7%
+🔹 Precisión Exacta: 19.2%  
+🔹 Precisión Aproximada: 39.2%  
 ```
+
+##### 🎯 `Sin Filtros`  
+```
+🔹 Precisión Exacta: 17.5%  
+🔹 Precisión Aproximada: 36.7%  
+```
+
+Estos resultados reflejan el impacto de los distintos filtros aplicados en el dataset. Aunque la eliminación de ruido mejora ligeramente la precisión, los valores obtenidos indican que el modelo aún enfrenta desafíos en la adaptación precisa de los textos a los niveles deseados.  
 
 ## 🚀 Conclusiones
 
