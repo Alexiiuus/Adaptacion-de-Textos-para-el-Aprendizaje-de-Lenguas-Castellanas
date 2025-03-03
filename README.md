@@ -427,10 +427,6 @@ Este resultado refleja un patrón ya observado al comparar Mistral con Cohere: l
 
 Este dataset amplía el de **Exactos**, incorporando ejemplos en los que el clasificador asignó un nivel adyacente al solicitado. Esto permite aumentar la cantidad de datos disponibles sin perder demasiada precisión (o al menos, no tanta precisión como el dataset sin filtros).  
 
-Aquí tienes una versión mejorada y más clara de esa sección:  
-
----
-
 ##### 🔥 Dataset `Exactos + Mitad de Textos Adyacentes`  
 
 ```
