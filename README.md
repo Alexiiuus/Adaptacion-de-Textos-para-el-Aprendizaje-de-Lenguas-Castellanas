@@ -336,7 +336,7 @@ Se evidencia la dificultad para diferenciar los casos intermedios, especialmente
 
 #### 🔍 Proceso  
 
-El primer paso es generar un dataset con ejemplos estructurados de la siguiente manera:  
+El primer paso es generar un dataset con ejemplos estructurados de la siguiente manera (aplicando el mismo prompt que usamos para comparar Mistra y Cohere en la sección anterior):  
 
 ```json
 [
@@ -420,7 +420,11 @@ Este resultado refleja un patrón ya observado al comparar Mistral con Cohere: l
 | C1    | 172     |
 | C2    | 69      |
 
-Este dataset amplía el de **Exactos**, incorporando ejemplos en los que el clasificador asignó un nivel adyacente al solicitado. Esto permite aumentar la cantidad de datos disponibles sin perder demasiada precisión.  
+Este dataset amplía el de **Exactos**, incorporando ejemplos en los que el clasificador asignó un nivel adyacente al solicitado. Esto permite aumentar la cantidad de datos disponibles sin perder demasiada precisión (o al menos, no tanta precisión como el dataset sin filtros).  
+
+Aquí tienes una versión mejorada y más clara de esa sección:  
+
+---
 
 ##### 🔥 Dataset `Exactos + Mitad de Textos Adyacentes`  
 
@@ -439,15 +443,68 @@ Este dataset amplía el de **Exactos**, incorporando ejemplos en los que el clas
 | C1    | 109     |
 | C2    | 53      |
 
-Este dataset es una versión reducida del anterior, en la que solo se conserva la mitad de los textos adyacentes. La intención es evaluar si eliminar parte de este ruido mejora la precisión del modelo sin afectar significativamente la diversidad del dataset.  
+Este dataset es una versión reducida del **Exactos y Adyacentes**, donde solo se conserva la mitad de los textos adyacentes. El objetivo es evaluar si reducir esta variabilidad mejora la precisión del modelo sin comprometer la diversidad de los datos.  
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.024.jpeg)  
 
 La imagen muestra la base de datos original de Cohere junto con los datasets generados en este proceso.  
 
+#### 🚀 Fine-Tuning en Cohere  
+
+Después de cargar el archivo JSON del dataset en la plataforma de Cohere, obtenemos el **ID del dataset** y procedemos a realizar el fine-tuning con el siguiente código:  
+
+```python
+import cohere
+
+# Clave de API de Cohere
+apikey = "API_KEY_COHERE"
+
+# Inicializar cliente de Cohere
+co = cohere.Client(apikey)  # Obtén tu API Key en: https://dashboard.cohere.com/api-keys
+
+from cohere.finetuning import (
+    BaseModel,
+    FinetunedModel,
+    Hyperparameters,
+    Settings,
+    WandbConfig
+)
+
+# Configuración de hiperparámetros
+hp = Hyperparameters(
+    early_stopping_patience=10,  # Detiene el entrenamiento si la métrica de pérdida no mejora después de 10 evaluaciones.
+    early_stopping_threshold=0.001,  # Umbral de mejora mínima para evitar la detención temprana.
+    train_batch_size=16,  # Tamaño del lote de entrenamiento (entre 2 y 16).
+    train_epochs=10,  # Número máximo de épocas de entrenamiento (entre 1 y 10).
+    learning_rate=0.001,  # Tasa de aprendizaje (entre 0.00005 y 0.1).
+)
+
+# Configuración de Weights & Biases (opcional)
+wnb_config = WandbConfig(
+    project="test-project",
+    api_key=apikey,
+    entity="test-entity",
+)
+
+# Creación del modelo ajustado
+finetuned_model = co.finetuning.create_finetuned_model(
+    request=FinetunedModel(
+        name="exacto",
+        settings=Settings(
+            base_model=BaseModel(base_type="BASE_TYPE_CHAT"),
+            dataset_id="ID_DATASET_EXACTO",  # Reemplazar con el ID del dataset subido
+            hyperparameters=hp,
+            wandb=wnb_config,
+        ),
+    )
+)
+```  
+
+Este código configura y entrena un modelo ajustado en Cohere utilizando el dataset generado. Se establecen hiperparámetros clave como la tasa de aprendizaje, el tamaño del lote y la estrategia de detención temprana para optimizar el rendimiento del modelo.  
+
 #### 🔬 Resultados del Fine-Tuning
 
-Después de realizar Fine-Tuning con las distintas muestras, estos fueron los resultados:
+Después de realizar Fine-Tuning con las distintos datasets generados, estos fueron los resultados:
 
 ##### 🎯 Exacto (372 textos)
 ```
