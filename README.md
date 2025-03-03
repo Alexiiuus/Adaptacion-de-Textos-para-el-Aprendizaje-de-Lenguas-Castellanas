@@ -1,6 +1,6 @@
 ﻿# Adaptación de Textos para el Aprendizaje del Español 📚
 
-## Resumen ✍️
+## Introducción ✍️
 
 Este proyecto tiene como objetivo adaptar textos en español a distintos niveles del Marco Común Europeo de Referencia para las Lenguas (MCER: A1, A2, B1, B2, C1, C2) utilizando un modelo de lenguaje. La adaptación busca ajustar la complejidad lingüística del texto sin alterar su significado original.
 
