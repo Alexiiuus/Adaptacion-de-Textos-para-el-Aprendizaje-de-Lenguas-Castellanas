@@ -206,11 +206,16 @@ Y con esto obtenemos como salida el label predicho (En este caso: **A1**).
 
 Para evaluar el impacto del **ruido de traducción**, entrenamos un clasificador en inglés utilizando los mismos parámetros y un conjunto de datos balanceado.
 
-![](images/metrics_histogram_test.png)
+![](images/metrics_histogram_test.png) 
 
-La similitud entre las **matrices de confusión** de ambos clasificadores sugiere que el efecto de la traducción es mínimo y no introduce un ruido significativo en el modelo. 🤖
+Como se puede observar, el clasificador en inglés enfrenta dificultades similares a las del clasificador en español. Para comprender mejor estos resultados, es fundamental analizar la **matriz de confusión**:  
 
-Recordemos que este ruido es intruducido por el modelo de traducción usado.
+![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.010.jpeg)  
+
+La similitud entre las **matrices de confusión** de ambos clasificadores sugiere que el impacto de la traducción en el modelo es mínimo y no introduce un ruido significativo. Recordemos que cualquier posible ruido en los datos proviene del modelo de traducción utilizado.  
+
+Sin embargo, es importante tener en cuenta que el propio clasificador también contribuye con su **error de entrenamiento**, lo que puede afectar la precisión general del sistema.  
+
 
 ### 3. Modelos de lenguaje para generación de texto 🌐
 
