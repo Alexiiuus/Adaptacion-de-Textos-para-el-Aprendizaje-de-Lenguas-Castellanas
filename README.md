@@ -1,4 +1,4 @@
-﻿### Adaptación de Textos para el Aprendizaje del Español 📚
+﻿# Adaptación de Textos para el Aprendizaje del Español 📚
 
 ## Resumen ✍️
 
@@ -141,7 +141,7 @@ Si bien estos resultados son alentadores, es importante considerar que la traduc
 
 #### Ejemplo de uso de Clasificador en español
 
-Luego de realizar el entrenamiento entrenamiento, guradamos el modelo de la siguiente forma:
+Luego de realizar el entrenamiento, guradamos el modelo de la siguiente forma:
 
 ```python
 trainer.save_model('path of the classifier folder')
@@ -239,7 +239,7 @@ Aquí está el texto:
 En este caso, **label** representa el nivel lingüístico deseado para la modificación del texto, y **text** es el texto base que se adaptará.
 
 #### Ejemplo de uso de Mistral 🤖
-A continuación, mostramos un ejemplo de cómo usamos Mistral con nuestro prompt:
+A continuación, mostramos un ejemplo de cómo usamos Mistral con nuestro prompt
 
 ```python
 from mistralai import Mistral
@@ -259,13 +259,13 @@ def run_mistral(user_message, model="mistral-large-latest"):
 
 Siendo **user_message** el prompt con el texto y el nivel elegidos.
 
-Ejemplo de uso: dado el siguiente texto en nivel A1:
+Ahora, dado el siguiente texto en nivel A1:
 
 ```
 Jenna estaba en el aeropuerto. Estaba esperando su avión. Su avión partiría a las 19:00 horas. Eran solo las dos de la tarde. Ella tuvo tiempo de comer. Tuvo tiempo para estudiar. Fue al restaurante del aeropuerto. El restaurante estaba en el tercer piso. El restaurante estaba lleno. No había asientos vacíos. No había mesas vacías. Ella no quería estar en la fila. No quería esperar. Había otro restaurante en el aeropuerto. Estaba en el primer piso. Bajó al primer piso. Ese restaurante estaba casi vacío. Había muchos asientos y muchas mesas.
 ```
 
-Le pediremos a Mistral que adapte este texto a A2:
+Le pediremos a Mistral que adapte este texto a A2 de la siguiente forma:
 
 ```
 A continuación, te proporcionaré un texto en español y te pediré que lo modifiques para diferentes niveles de competencia lingüística (A1, A2, B1, B2, C1 y C2), concretamente: B2. El objetivo es que adaptes el texto según el nivel de dificultad, modificando el vocabulario y las estructuras gramaticales para que se ajusten a cada nivel, pero manteniendo el mismo mensaje central. Solo responde con la version del texto modificada para dicho nivel. No incluyas ninguna introducción, título, explicación o comentario. Solamente dame el texto adaptado.
@@ -281,7 +281,7 @@ Jenna estaba en el aeropuerto esperando su avión, que saldría a las 19:00 hora
 ```
 
 #### Ejemplo de uso de Cohere 🌐
-A continuación, mostramos un ejemplo de cómo usamos Cohere con nuestro prompt:
+A continuación, mostramos un ejemplo de cómo usamos Cohere con nuestro prompt
 
 ```python
 import cohere
@@ -331,7 +331,6 @@ Como se observa en la matriz de confusión, **Cohere** supera a **Mistral** en t
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.015.png)
 
 Se evidencia la dificultad para diferenciar los casos intermedios, especialmente en las clases B1 y B2, así como en C2. Considerando el tiempo de ejecución y los resultados obtenidos, **Cohere** se presenta como la mejor opción para hacer el Fine-Tuning.
-
 
 
 ### 📌 Fine-Tuning del Modelo Cohere para la adaptacion de textos
