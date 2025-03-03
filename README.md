@@ -2,7 +2,7 @@
 
 ## Introducción ✍️
 
-Este proyecto tiene como objetivo adaptar textos en español a distintos niveles del Marco Común Europeo de Referencia para las Lenguas (MCER: A1, A2, B1, B2, C1, C2) utilizando un modelo de lenguaje. La adaptación busca ajustar la complejidad lingüística del texto sin alterar su significado original.
+Este proyecto tiene como objetivo desarrollar un modelo de lenguaje, el cual tenga la capacidad de adaptar textos castellanos a los distintos niveles de complejidad establecidos por el MCER o "Marco Común Europeo de Referencia para las Lenguas". (Niveles del MCER: A1, A2, B1, B2, C1, C2). Para la adaptación de los textos, estos deben ajustarse apropiadamente a la complejidad lingüística solicitada y conservar su significado original.
 
 ## Hipótesis de Trabajo 🤔
 
@@ -14,7 +14,7 @@ Antes de iniciar el desarrollo del proyecto, planteamos las siguientes hipótesi
 
 El desarrollo del proyecto se basa en los siguientes objetivos:
 1. Obtener un conjunto de datos con textos en español etiquetados por nivel de competencia lingüística (A1, A2, B1, B2, C1, C2).
-2. Desarrollar o entrenar un clasificador de texto que identifique el nivel MCER en español, permitiendo la comparación con modelos generadores de texto.
+2. Desarrollar y entrenar un clasificador de texto que identifique el nivel MCER en español, permitiendo la comparación con modelos generadores de texto.
 3. Evaluar modelos de lenguaje para la adaptación de textos en español:
     - Comparar la precisión y velocidad de adaptación de cada modelo.
     - Seleccionar el modelo con mejor rendimiento.
@@ -30,7 +30,7 @@ El primer paso fue obtener un conjunto de datos con textos etiquetados según lo
 |:--------------------------------:|:--------------------------------:|
 | Texto original en inglés         | Texto traducido al español      |
 
-La traducción puede introducir errores en las etiquetas, generando **ruido** en los datos. A pesar de ello, utilizamos este dataset con la expectativa de que sea suficiente para entrenar el modelo.
+La traducción puede introducir errores en las etiquetas, generando **ruido** en los datos. A pesar de ello, utilizamos este dataset traducido con la expectativa de que sea lo suficientemente preciso como para entrenar un buen modelo.
 
 Para minimizar sesgos, realizamos un **balanceo de clases**, tomando como referencia la clase minoritaria (C2 = 200).
 
@@ -41,7 +41,7 @@ Este balanceo ayuda a evitar que el modelo favorezca las clases mayoritarias e i
 
 ### 2. Clasificador 🔍
 
-Antes de evaluar los modelos de lenguaje, es necesario contar con un **clasificador de texto** que permita comparar la precisión de los resultados. Como no encontramos un clasificador específico para los niveles del MCER en español, decidimos entrenar uno utilizando un conjunto de datos previamente etiquetado.
+Antes de evaluar los modelos de lenguaje, es necesario contar con un **clasificador de texto** que permita comparar la precisión de los resultados. Sin embargo, no pudimos encontrar un clasificador de textos el cual fuera específico para niveles del MCER en castellano. Por este motivo es que decidimos entrenar uno propio, utilizando nuestro dataset previamente etiquetado.
 
 #### Enfoques de Entrenamiento 🔬
 
@@ -79,7 +79,7 @@ Si bien LinearSVC fue sencillo de implementar y ejecutar, sus resultados fueron 
 
 ##### **Resultados y Elección del Modelo**
 
-El mejor rendimiento lo obtuvo BERT con los siguientes parámetros de entrenamiento:
+Luego de realizar los respectivos entrenamientos, obtuvimos el mejor rendimiento con BERT. No presentaremos todos los resultados de los clasificadores, ya que el análisis de clasificadores de texto no forma parte del objetivo de este proyecto, pero sí mencionaremos los parámetros de entrenamiento que dieron los mejores resultados con BERT, en caso de que se desee replicar este clasificador:
 
 - 75% de los datos para entrenamiento y 25% para pruebas.
 - 12 épocas ⏳.
@@ -112,32 +112,30 @@ trainer = Trainer(
 trainer.train()
 ```
 
-Debido a su alto rendimiento, optamos por utilizar el enfoque con **BERT** para entrenar nuestro clasificador principal.
-
 ### Precisión del Clasificador con el Enfoque BERT 📊
 
 ![](images/metrics_histogram_eval.png)
 
-Al graficar la precisión de cada clase, se observa que el clasificador enfrenta mayores dificultades en los niveles intermedios, especialmente en la clase **C1**.
+Al graficar la precisión de cada clase, se observa que nuestro clasificador enfrenta mayores dificultades en los niveles intermedios, especialmente en la clase **C1**.
 
-Esta problemática se refleja con mayor claridad en la **matriz de confusión**.
+Esta problemática se refleja con mayor claridad en la siguiente **matriz de confusión**:
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.007.png)
 
-A pesar de esto, la mayoría de los errores se producen en niveles adyacentes, lo que implica un desfase leve que incluso pueden experimentar los profesionales del área. Por lo tanto, la **precisión del 66%** corresponde exclusivamente a las **predicciones exactas**.
+A pesar de esto, es importante notar que la mayoría de estos errores se producen en niveles muy cercanos (principalmente aquellos niveles que son adyacentes), esto implicaría que el desfase es en realidad leve (este tipo de imprecisiones es algo que pueden experimentar incluso los profesionales del área). Por lo tanto, la **precisión del 66%** corresponde exclusivamente a aquellas predicciones que llamaremos **predicciones exactas**.
 
 ### Precisión Aproximada 📈
 
-Para una mejor evaluación del desempeño, introducimos una métrica alternativa: **Precisión Aproximada**, ajustando los resultados según el siguiente criterio:
+Para una mejor evaluación del desempeño de nuestro clasificador, introduciremos una métrica de interés llamada **Precisión Aproximada**. Esta métrica utiliza el siguiente criterio:
 
 - **Corrección = | nivel_esperado − nivel_predecido |**
 - Si la corrección es **0**, la predicción es **correcta** (1 punto). ✅
-- Si la corrección es **1**, la predicción es **aproximadamente correcta** (0.5 puntos). 🤔
+- Si la corrección es **1**, la predicción es **aproximadamente correcta** o **adyacente** (0.5 puntos). 🤔
 - En cualquier otro caso, la predicción es **incorrecta** (0 puntos). ❌
 
-Bajo esta métrica, la **precisión exacta** sigue siendo del **66%**, pero la **Precisión Aproximada** alcanza el **96%**. 🎯
+Es decir, si bien la **Precisión Exacta** sigue siendo del **66%**, podemos tomar en consideración también la  **Precisión Aproximada**, la cual alcanza un **96%** de precisión. 🎯
 
-Si bien estos resultados son alentadores, es importante considerar que la traducción del conjunto de datos introduce cierto nivel de ruido en el entrenamiento, lo que puede afectar la precisión del modelo.
+Si bien estos resultados son alentadores, es importante considerar que la traducción del conjunto de datos introduce cierto nivel de ruido en el entrenamiento, lo que puede afectar la precisión del clasificador y del modelo.
 
 #### Ejemplo de uso de Clasificador en español
 
