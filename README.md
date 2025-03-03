@@ -1,4 +1,4 @@
-﻿# Adaptación de Textos para el Aprendizaje del Español 📚
+﻿﻿# Adaptación de Textos para el Aprendizaje del Español 📚
 
 ## Introducción ✍️
 
@@ -135,7 +135,7 @@ Para una mejor evaluación del desempeño de nuestro clasificador, introduciremo
 
 Es decir, si bien la **Precisión Exacta** sigue siendo del **66%**, podemos tomar en consideración también la  **Precisión Aproximada**, la cual alcanza un **96%** de precisión. 🎯
 
-Si bien estos resultados son alentadores, es importante considerar que la traducción del conjunto de datos introduce cierto nivel de ruido en el entrenamiento, lo que puede afectar la precisión del clasificador y del modelo.
+Si bien estos resultados son alentadores, es importante considerar que la traducción del conjunto de datos introduce cierto nivel de ruido en el entrenamiento, lo que puede afectar la precisión del clasificador.
 
 #### Ejemplo de uso de Clasificador en español
 
