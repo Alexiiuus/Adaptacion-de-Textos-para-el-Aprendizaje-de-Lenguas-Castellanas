@@ -214,7 +214,7 @@ Como se puede observar, el clasificador en inglés enfrenta dificultades similar
 
 La similitud entre las **matrices de confusión** de ambos clasificadores (inglés y español) sugiere que el impacto en la traducción no resulta ser muy diferencial en el entrenamiento del clasificador cuando observamos la precisión obtenida y la comparamos.
 
-Recordemos que cualquier posible ruido en los datos proviene del modelo de traducción utilizado. Además, es importante tener en cuenta que el propio clasificador también contribuye con su **error de entrenamiento**, lo que puede afectar a la precisión general del sistema.  
+Recordemos que cualquier posible ruido en los datos proviene del modelo de traducción utilizado. Además, es importante tener en cuenta que el propio clasificador también contribuye con su **error de entrenamiento**, lo que puede afectar a la precisión general del sistema en las siguientes secciones.  
 
 
 ### 3. Modelos de lenguaje para generación de texto 🌐
