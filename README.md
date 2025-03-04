@@ -47,9 +47,7 @@ Para la traducción utilizamos el modelo [opus-mt-en-es](https://huggingface.co/
 - **BLEU (Bilingual Evaluation Understudy)**: Es una métrica que evalúa la calidad de una traducción automática comparándola con una traducción humana de referencia. Analiza cuántas palabras y frases coinciden con la versión correcta. Un puntaje más alto (entre 0 y 100) indica una traducción más precisa.  
 - **chr-F (Character F-score)**: En lugar de comparar palabras completas, esta métrica analiza fragmentos de palabras y caracteres. Es útil cuando la traducción no es exacta pero sigue transmitiendo el mismo significado, lo que ayuda a evaluar mejor la calidad del resultado.
 
-La traducción puede introducir errores en las etiquetas, generando **ruido** en los datos. A pesar de ello, utilizamos este dataset traducido con la expectativa de que sea lo suficientemente preciso como para entrenar un buen modelo.
-
-Para minimizar sesgos, realizamos un **balanceo de clases**, tomando como referencia la clase minoritaria (C2 = 200).
+Ahora con este dataset traducido realizaremos un **balanceo de clases** tomando como referencia la clase minoritaria (C2 = 200).
 
 ![Distribución de clases balanceada](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.003.png)
 
