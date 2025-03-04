@@ -1,4 +1,4 @@
-﻿﻿# Adaptación de Textos para el Aprendizaje del Español 📚
+# Adaptación de Textos para el Aprendizaje del Español 📚
 
 ## Introducción ✍️
 
@@ -212,9 +212,9 @@ Como se puede observar, el clasificador en inglés enfrenta dificultades similar
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.010.jpeg)  
 
-La similitud entre las **matrices de confusión** de ambos clasificadores (inglés y español) sugiere que el **ruido generado** por traducir el dataset al español es, en realidad, casi irrelevante y su impacto al entrenar es casi imperceptible.
+La similitud entre las **matrices de confusión** de ambos clasificadores (inglés y español) sugiere que el impacto en la traducción no resulta ser muy diferencial en el entrenamiento del clasificador cuando observamos la precisión obtenida y la comparamos.
 
-Recordemos que cualquier posible ruido en los datos proviene del modelo de traducción utilizado, en nuestro caso pareció funcionar bastante bien. Además, es importante tener en cuenta que el propio clasificador también contribuye con su **error de entrenamiento**, lo que puede afectar a la precisión general del sistema.  
+Recordemos que cualquier posible ruido en los datos proviene del modelo de traducción utilizado. Además, es importante tener en cuenta que el propio clasificador también contribuye con su **error de entrenamiento**, lo que puede afectar a la precisión general del sistema.  
 
 
 ### 3. Modelos de lenguaje para generación de texto 🌐
