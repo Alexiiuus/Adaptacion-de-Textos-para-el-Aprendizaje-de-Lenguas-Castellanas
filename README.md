@@ -22,13 +22,30 @@ El desarrollo del proyecto se basa en los siguientes objetivos:
 
 ## Desarrollo del Proyecto 🔧
 
-### 1. Dataset 📂
+### 1. Dataset 📂  
 
-El primer paso fue obtener un conjunto de datos con textos etiquetados según los niveles del MCER. No encontramos un dataset adecuado en español, por lo que optamos por traducir el dataset **[CEFR Levelled English Texts (Kaggle)](https://www.kaggle.com/datasets/amontgomerie/cefr-levelled-english-texts)** del inglés al español.
+El primer paso fue obtener un conjunto de datos con textos etiquetados según los niveles del MCER. Como no encontramos un dataset adecuado en español, optamos por traducir el dataset **[CEFR Levelled English Texts (Kaggle)](https://www.kaggle.com/datasets/amontgomerie/cefr-levelled-english-texts)** del inglés al español.  
 
 | ![Original](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.001.png) | ![Traducido](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.002.png) |
 |:--------------------------------:|:--------------------------------:|
-| Texto original en inglés         | Texto traducido al español      |
+| Texto original en inglés         | Texto traducido al español      |  
+
+Para la traducción utilizamos el modelo [opus-mt-en-es](https://huggingface.co/Helsinki-NLP/opus-mt-en-es). A continuación, se presentan los benchmarks de este modelo en distintos conjuntos de prueba, lo que nos da una idea del margen de error que puede introducir la traducción:  
+
+| Conjunto de prueba               | BLEU  | chr-F |
+|----------------------------------|-------|-------|
+| newssyscomb2009-engspa.eng.spa  | 31.0  | 0.583 |
+| news-test2008-engspa.eng.spa    | 29.7  | 0.564 |
+| newstest2009-engspa.eng.spa     | 30.2  | 0.578 |
+| newstest2010-engspa.eng.spa     | 36.9  | 0.620 |
+| newstest2011-engspa.eng.spa     | 38.2  | 0.619 |
+| newstest2012-engspa.eng.spa     | 39.0  | 0.625 |
+| newstest2013-engspa.eng.spa     | 35.0  | 0.598 |
+| Tatoeba-test.eng.spa            | 54.9  | 0.721 |
+
+#### ¿Qué significan BLEU y chr-F?  
+- **BLEU (Bilingual Evaluation Understudy)**: Es una métrica que evalúa la calidad de una traducción automática comparándola con una traducción humana de referencia. Analiza cuántas palabras y frases coinciden con la versión correcta. Un puntaje más alto (entre 0 y 100) indica una traducción más precisa.  
+- **chr-F (Character F-score)**: En lugar de comparar palabras completas, esta métrica analiza fragmentos de palabras y caracteres. Es útil cuando la traducción no es exacta pero sigue transmitiendo el mismo significado, lo que ayuda a evaluar mejor la calidad del resultado.
 
 La traducción puede introducir errores en las etiquetas, generando **ruido** en los datos. A pesar de ello, utilizamos este dataset traducido con la expectativa de que sea lo suficientemente preciso como para entrenar un buen modelo.
 
