@@ -2,7 +2,7 @@
 
 ## Introducción ✍️
 
-Este proyecto tiene como objetivo desarrollar un modelo de lenguaje, el cual tenga la capacidad de adaptar textos castellanos a los distintos niveles de complejidad establecidos por el MCER o "Marco Común Europeo de Referencia para las Lenguas". (Niveles del MCER: A1, A2, B1, B2, C1, C2). Para la adaptación de los textos, estos deben ajustarse apropiadamente a la complejidad lingüística solicitada y conservar su significado original.
+Este proyecto tiene como objetivo desarrollar un modelo de lenguajes que tenga la capacidad de adaptar textos castellanos a los distintos niveles de complejidad establecidos por el MCER o "Marco Común Europeo de Referencia para las Lenguas". Los niveles del MCER son los siguientes: A1, A2, B1, B2, C1, C2 (de principiante hasta avanzado). Para la adaptación de los textos, estos deben ajustarse apropiadamente a la complejidad lingüística solicitada y conservar su significado original.
 
 ## Hipótesis de Trabajo 🤔
 
