@@ -170,12 +170,12 @@ Sí. ¡Mira! Cogiste un pez.
 Espera, hijo. Conseguiré una red.
 ```
 
-Para ello, hacemos lo siguiente:
+Para ello, realizamos lo siguiente:
 
 ```python
 import torch
 
-# Dataset pat: 0. Dataset/spanish_dataset200.csv
+# Dataset path: 0. Dataset/spanish_dataset200.csv
 text = df["text"][198] 
 
 # Tokenización del texto
@@ -204,17 +204,17 @@ Y con esto obtenemos como salida el label predicho (En este caso: **A1**).
 
 ### Comparación con Clasificador en Inglés 🌍
 
-Para evaluar el impacto del **ruido de traducción**, entrenamos un clasificador en inglés utilizando los mismos parámetros y un conjunto de datos balanceado.
+Para evaluar el impacto del **ruido de traducción**, entrenamos un clasificador en inglés utilizando los mismos parámetros y un conjunto de datos balanceado. Luego del entrenamiento, obtuvimos estos resultados:
 
 ![](images/metrics_histogram_test.png) 
 
-Como se puede observar, el clasificador en inglés enfrenta dificultades similares a las del clasificador en español. Para comprender mejor estos resultados, es fundamental analizar la **matriz de confusión**:  
+Como se puede observar, el clasificador en inglés enfrenta dificultades similares a las del clasificador en español. Para comprender mejor estos resultados, es fundamental analizar su **matriz de confusión**:  
 
 ![](images/Aspose.Words.ccf872ce-c988-4e7e-8645-db3a81b14ce5.010.jpeg)  
 
-La similitud entre las **matrices de confusión** de ambos clasificadores sugiere que el impacto de la traducción en el modelo es mínimo y no introduce un ruido significativo. Recordemos que cualquier posible ruido en los datos proviene del modelo de traducción utilizado.  
+La similitud entre las **matrices de confusión** de ambos clasificadores (inglés y español) sugiere que el **ruido generado** por traducir el dataset al español es, en realidad, casi irrelevante y su impacto al entrenar es casi imperceptible.
 
-Sin embargo, es importante tener en cuenta que el propio clasificador también contribuye con su **error de entrenamiento**, lo que puede afectar la precisión general del sistema.  
+Recordemos que cualquier posible ruido en los datos proviene del modelo de traducción utilizado, en nuestro caso pareció funcionar bastante bien. Además, es importante tener en cuenta que el propio clasificador también contribuye con su **error de entrenamiento**, lo que puede afectar a la precisión general del sistema.  
 
 
 ### 3. Modelos de lenguaje para generación de texto 🌐
